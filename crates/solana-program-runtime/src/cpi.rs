@@ -542,6 +542,33 @@ pub fn translate_instruction_rust(
     let check_aligned = invoke_context.get_check_aligned();
     let memory_mapping = invoke_context.memory_contexts.memory_mapping()?;
     let ix = translate_type::<StableInstruction>(memory_mapping, addr, check_aligned)?;
+    if std::env::var("SBPF_CPI_DEBUG").is_ok() {
+        let pid_bytes = ix.program_id.to_bytes();
+        eprintln!(
+            "[CPI_TRANSLATE] addr=0x{:x} accounts_vaddr=0x{:x} accounts_len={} data_vaddr=0x{:x} data_len={} program_id={} program_id_hex={:02x?}",
+            addr,
+            ix.accounts.as_vaddr(),
+            ix.accounts.len(),
+            ix.data.as_vaddr(),
+            ix.data.len(),
+            ix.program_id,
+            &pid_bytes[..],
+        );
+        let account_metas_preview = translate_slice::<AccountMeta>(
+            memory_mapping,
+            ix.accounts.as_vaddr(),
+            ix.accounts.len(),
+            check_aligned,
+        );
+        if let Ok(metas) = &account_metas_preview {
+            for (i, meta) in metas.iter().enumerate() {
+                eprintln!(
+                    "[CPI_TRANSLATE]   account[{}]: pubkey={} signer={} writable={}",
+                    i, meta.pubkey, meta.is_signer, meta.is_writable,
+                );
+            }
+        }
+    }
     let account_metas = translate_slice::<mem::MaybeUninit<AccountMeta>>(
         memory_mapping,
         ix.accounts.as_vaddr(),
