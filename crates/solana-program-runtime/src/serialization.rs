@@ -559,50 +559,53 @@ fn serialize_parameters_for_abiv1(
     for account in accounts {
         match account {
             SerializeAccount::Account(_, mut borrowed_account) => {
-                SerializeAccount::Account(_, mut borrowed_account) => {
-                    // SBPF_DUMP_SYSVAR: dump Instructions sysvar account data at serialization time
-                    if std::env::var("SBPF_DUMP_SYSVAR").is_ok() {
-                        let key_bytes = borrowed_account.get_key().as_ref();
-                        // Sysvar1nstructions1111111111111111111111111 = 0x06a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea9400000
-                        let is_instructions_sysvar = key_bytes
-                            == &[
-                                6, 167, 213, 23, 25, 44, 86, 142, 224, 138, 132, 95, 115, 210, 151,
-                                136, 207, 3, 92, 49, 69, 178, 26, 179, 68, 216, 6, 46, 169, 64, 0, 0,
-                            ];
-                        if is_instructions_sysvar {
-                            let data = borrowed_account.get_data();
-                            eprintln!("[SBPF_DUMP_SYSVAR] Instructions sysvar at serialization: program_id={} data_len={}", program_id, data.len());
-                            // Hex dump first 256 bytes and last 64 bytes
-                            let dump_head = data.len().min(256);
+                // SBPF_DUMP_SYSVAR: dump Instructions sysvar account data at serialization time
+                if std::env::var("SBPF_DUMP_SYSVAR").is_ok() {
+                    let key_bytes = borrowed_account.get_key().as_ref();
+                    // Sysvar1nstructions1111111111111111111111111 = 0x06a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea9400000
+                    let is_instructions_sysvar = key_bytes
+                        == &[
+                            6, 167, 213, 23, 25, 44, 86, 142, 224, 138, 132, 95, 115, 210, 151,
+                            136, 207, 3, 92, 49, 69, 178, 26, 179, 68, 216, 6, 46, 169, 64, 0, 0,
+                        ];
+                    if is_instructions_sysvar {
+                        let data = borrowed_account.get_data();
+                        eprintln!(
+                            "[SBPF_DUMP_SYSVAR] Instructions sysvar at serialization: program_id={} data_len={}",
+                            program_id,
+                            data.len()
+                        );
+                        // Hex dump first 256 bytes and last 64 bytes
+                        let dump_head = data.len().min(256);
+                        eprintln!(
+                            "[SBPF_DUMP_SYSVAR] head[0..{}]: {}",
+                            dump_head,
+                            data[..dump_head]
+                                .iter()
+                                .map(|b| format!("{:02x}", b))
+                                .collect::<Vec<_>>()
+                                .join("")
+                        );
+                        if data.len() > 256 {
+                            let tail_start = data.len().saturating_sub(64);
                             eprintln!(
-                                "[SBPF_DUMP_SYSVAR] head[0..{}]: {}",
-                                dump_head,
-                                data[..dump_head]
+                                "[SBPF_DUMP_SYSVAR] tail[{}..{}]: {}",
+                                tail_start,
+                                data.len(),
+                                data[tail_start..]
                                     .iter()
                                     .map(|b| format!("{:02x}", b))
                                     .collect::<Vec<_>>()
                                     .join("")
                             );
-                            if data.len() > 256 {
-                                let tail_start = data.len().saturating_sub(64);
-                                eprintln!(
-                                    "[SBPF_DUMP_SYSVAR] tail[{}..{}]: {}",
-                                    tail_start,
-                                    data.len(),
-                                    data[tail_start..]
-                                        .iter()
-                                        .map(|b| format!("{:02x}", b))
-                                        .collect::<Vec<_>>()
-                                        .join("")
-                                );
-                            }
-                            // Full hex dump to file if SBPF_DUMP_SYSVAR_FILE is set
-                            if let Ok(path) = std::env::var("SBPF_DUMP_SYSVAR_FILE") {
-                                std::fs::write(&path, data).ok();
-                                eprintln!("[SBPF_DUMP_SYSVAR] wrote {} bytes to {}", data.len(), path);
-                            }
+                        }
+                        // Full hex dump to file if SBPF_DUMP_SYSVAR_FILE is set
+                        if let Ok(path) = std::env::var("SBPF_DUMP_SYSVAR_FILE") {
+                            std::fs::write(&path, data).ok();
+                            eprintln!("[SBPF_DUMP_SYSVAR] wrote {} bytes to {}", data.len(), path);
                         }
                     }
+                }
                 let vm_addr = s.write::<u8>(NON_DUP_MARKER);
                 s.write::<u8>(borrowed_account.is_signer() as u8);
                 s.write::<u8>(borrowed_account.is_writable() as u8);

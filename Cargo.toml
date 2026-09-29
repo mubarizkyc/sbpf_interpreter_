@@ -1,10 +1,9 @@
 
 [workspace]
-members = [ "crates/solana-bpf-loader-program","crates/solana-program-runtime","crates/solana-transaction-context"]
+members = [ "crates/solana-bpf-loader-program","crates/solana-program-runtime","crates/solana-transaction-context","crates/solana-syscalls","crates/solana-system-program"]
 [package]
 name = "sbpf_interpreter_"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-solana-transaction-context = "4.3.0"

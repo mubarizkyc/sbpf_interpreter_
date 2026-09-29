@@ -99,17 +99,17 @@ features = ["serde"]
 version = "4.3.0"
 
 [dependencies.solana-program-runtime]
-version = "=4.3.0"
+path="../solana-program-runtime"
 features = ["agave-unstable-api"]
 
 [dependencies.solana-pubkey]
 version = "4.3.0"
 default-features = false
 [dependencies.solana-sbpf]
-git = "https://github.com/mubarizkyc/sbpf"
-branch = "interpreter"
+path = "../../../sbpf"
 features = ["jit"]
 default-features = false
+
 
 
 [dependencies.solana-sdk-ids]
@@ -146,7 +146,7 @@ features = [
 ]
 
 [dependencies.solana-transaction-context]
-version = "=4.3.0"
+path = "../solana-transaction-context"
 features = [
     "agave-unstable-api",
     "bincode",

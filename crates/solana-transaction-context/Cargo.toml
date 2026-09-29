@@ -70,6 +70,9 @@ version = "4.0.0"
 [dependencies.solana-pubkey]
 version = "4.3.0"
 default-features = false
+[dependencies.solana-sbpf]
+path = "../../../sbpf"
+default-features = false
 
 [dependencies.wincode]
 version = "0.6.1"
@@ -116,9 +119,7 @@ optional = true
 [target.'cfg(not(any(target_arch = "sbf", target_arch = "bpf")))'.dependencies.solana-rent]
 version = "4.4.0"
 
-[target.'cfg(not(any(target_arch = "sbf", target_arch = "bpf")))'.dependencies.solana-sbpf]
-path = "../../../sbpf"
-default-features = false
+
 
 [target.'cfg(not(any(target_arch = "sbf", target_arch = "bpf")))'.dependencies.solana-sdk-ids]
 version = "3.1.0"
