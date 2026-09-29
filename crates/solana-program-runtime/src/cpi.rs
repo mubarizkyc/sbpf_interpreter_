@@ -809,6 +809,12 @@ pub fn cpi_common<S: SyscallInvokeSigned>(
     //
     // Translate the inputs to the syscall and synchronize the caller's account
     // changes so the callee can see them.
+    if std::env::var("SBPF_CPI_DEBUG").is_ok() {
+        eprintln!(
+            "[CPI] ENTER cpi_common depth={}",
+            invoke_context.get_stack_height()
+        );
+    }
     let amount = invoke_context.get_execution_cost().invoke_units;
     invoke_context.compute_meter.consume_checked(amount)?;
     let syscall_parameter_address_restrictions = invoke_context
@@ -821,6 +827,21 @@ pub fn cpi_common<S: SyscallInvokeSigned>(
     let check_aligned = invoke_context.get_check_aligned();
 
     let instruction = S::translate_instruction(instruction_addr, invoke_context)?;
+
+    if std::env::var("SBPF_CPI_DEBUG").is_ok() {
+        eprintln!(
+            "[CPI] target={} data={} accounts={} depth={}",
+            instruction.program_id,
+            instruction
+                .data
+                .iter()
+                .take(8)
+                .map(|b| format!("{:02x}", b))
+                .collect::<String>(),
+            instruction.accounts.len(),
+            invoke_context.get_stack_height()
+        );
+    }
     let instruction_context = invoke_context
         .transaction_context
         .get_current_instruction_context()?;
@@ -865,8 +886,14 @@ pub fn cpi_common<S: SyscallInvokeSigned>(
 
     // Process the callee instruction
     let mut compute_units_consumed = 0;
-    invoke_context
-        .process_instruction(&mut compute_units_consumed, &mut ExecuteTimings::default())?;
+    let cpi_result = invoke_context
+        .process_instruction(&mut compute_units_consumed, &mut ExecuteTimings::default());
+    if let Err(ref err) = cpi_result {
+        if std::env::var("SBPF_CPI_DEBUG").is_ok() {
+            eprintln!("[CPI] FAILED: {:?} (CU={})", err, compute_units_consumed);
+        }
+    }
+    cpi_result?;
 
     // re-bind to please the borrow checker
     let transaction_context = &invoke_context.transaction_context;
