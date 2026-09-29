@@ -1,6 +1,10 @@
+
+[workspace]
+members = [ "crates/solana-bpf-loader-program","crates/solana-program-runtime"]
 [package]
 name = "sbpf_interpreter_"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+solana-program-runtime = "4.3.0"
