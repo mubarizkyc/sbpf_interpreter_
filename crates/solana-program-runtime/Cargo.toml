@@ -142,9 +142,10 @@ default-features = false
 version = "4.4.0"
 
 [dependencies.solana-sbpf]
-version = "=0.23.0"
+path = "../../../sbpf"
 features = ["jit"]
 default-features = false
+
 
 [dependencies.solana-sdk-ids]
 version = "3.1.0"

@@ -2109,7 +2109,7 @@ dependencies = [
 name = "sbpf_interpreter_"
 version = "0.1.0"
 dependencies = [
- "solana-program-runtime 4.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solana-transaction-context 4.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -2547,7 +2547,7 @@ dependencies = [
  "solana-system-interface",
  "solana-system-program",
  "solana-sysvar-id",
- "solana-transaction-context",
+ "solana-transaction-context 4.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "wincode",
 ]
 
@@ -3024,7 +3024,7 @@ dependencies = [
  "solana-program-entrypoint",
  "solana-pubkey",
  "solana-rent",
- "solana-sbpf 0.23.0",
+ "solana-sbpf 0.24.0",
  "solana-sdk-ids",
  "solana-secp256k1-program",
  "solana-secp256r1-program",
@@ -3043,7 +3043,7 @@ dependencies = [
  "solana-sysvar",
  "solana-sysvar-id",
  "solana-transaction",
- "solana-transaction-context",
+ "solana-transaction-context 4.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "test-case",
  "thiserror 2.0.21",
  "wincode",
@@ -3090,7 +3090,7 @@ dependencies = [
  "solana-system-interface",
  "solana-sysvar",
  "solana-sysvar-id",
- "solana-transaction-context",
+ "solana-transaction-context 4.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.21",
  "wincode",
 ]
@@ -3141,6 +3141,23 @@ dependencies = [
  "rand 0.8.8",
  "rustc-demangle",
  "shuttle 0.7.1",
+ "thiserror 2.0.21",
+ "winapi",
+]
+
+[[package]]
+name = "solana-sbpf"
+version = "0.24.0"
+dependencies = [
+ "byteorder",
+ "combine",
+ "gdbstub",
+ "hash32",
+ "libc",
+ "log",
+ "rand 0.8.8",
+ "rustc-demangle",
+ "shuttle 0.9.4",
  "thiserror 2.0.21",
  "winapi",
 ]
@@ -3463,7 +3480,7 @@ dependencies = [
  "solana-svm-log-collector",
  "solana-svm-type-overrides",
  "solana-sysvar-id",
- "solana-transaction-context",
+ "solana-transaction-context 4.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.21",
  "wincode",
 ]
@@ -3505,7 +3522,7 @@ dependencies = [
  "solana-svm-log-collector",
  "solana-system-interface",
  "solana-sysvar",
- "solana-transaction-context",
+ "solana-transaction-context 4.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -3577,6 +3594,28 @@ dependencies = [
 [[package]]
 name = "solana-transaction-context"
 version = "4.3.0"
+dependencies = [
+ "bincode",
+ "qualifier_attr",
+ "serde",
+ "solana-account",
+ "solana-account-info",
+ "solana-instruction 3.5.1",
+ "solana-instructions-sysvar",
+ "solana-program-entrypoint",
+ "solana-pubkey",
+ "solana-rent",
+ "solana-sbpf 0.24.0",
+ "solana-sdk-ids",
+ "solana-signature",
+ "solana-system-interface",
+ "static_assertions",
+ "wincode",
+]
+
+[[package]]
+name = "solana-transaction-context"
+version = "4.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c6e5fbf51c4cd282f4cb69c8d11b8235b43d56c0409252b64d7c4c4063caae47"
 dependencies = [
@@ -3612,6 +3651,12 @@ dependencies = [
  "base64ct",
  "der",
 ]
+
+[[package]]
+name = "static_assertions"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "strsim"
