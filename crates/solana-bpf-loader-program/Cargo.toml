@@ -132,7 +132,7 @@ version = "=4.3.0"
 features = ["agave-unstable-api"]
 
 [dependencies.solana-syscalls]
-version = "=4.3.0"
+path = "../solana-syscalls"
 features = ["agave-unstable-api"]
 default-features = false
 
@@ -196,7 +196,7 @@ features = ["wincode"]
 version = "3.2.0"
 
 [dev-dependencies.solana-system-program]
-version = "=4.3.0"
+path = "../solana-system-program"
 features = ["agave-unstable-api"]
 
 [dev-dependencies.solana-sysvar-id]

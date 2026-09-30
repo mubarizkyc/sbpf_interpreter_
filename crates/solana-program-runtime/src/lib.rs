@@ -18,8 +18,8 @@ pub mod program_metrics;
 pub mod serialization;
 pub mod stable_log;
 pub mod sysvar_cache;
+pub mod tracing;
 pub mod vm;
-
 // re-exports for macros
 pub mod __private {
     pub use {

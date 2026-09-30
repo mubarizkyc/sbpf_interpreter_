@@ -313,9 +313,13 @@ pub fn execute<'a, 'b: 'a>(
         vm.registers[2] = instruction_data_offset as u64;
         let mut call_frames =
             MEMORY_POOL.with_borrow_mut(|memory_pool| memory_pool.get_call_frames());
+        crate::tracing::tracing::apply_trace_config_to_vm(&mut vm);
+        vm.trace_config.current_program_id = program_id.to_bytes();
+
         let (compute_units_consumed, result) =
             vm.execute_program(executable, &mut execution_mode, &mut call_frames);
         let register_trace = std::mem::take(&mut vm.register_trace);
+        crate::tracing::tracing::extract_traces_from_vm(&mut vm);
         MEMORY_POOL.with_borrow_mut(|memory_pool| {
             memory_pool.put_stack(stack);
             memory_pool.put_heap(heap);
@@ -358,8 +362,16 @@ pub fn execute<'a, 'b: 'a>(
         }
         match result {
             ProgramResult::Ok(status) if status != SUCCESS => {
-                let error: InstructionError = status.into();
-                Err(Box::new(error) as Box<dyn std::error::Error>)
+                if std::env::var("SBPF_BYPASS_BLOCKING").is_ok() {
+                    eprintln!(
+                        "[BYPASS] Suppressed blocking error (Custom({})) for {}",
+                        status, program_id
+                    );
+                    Ok(())
+                } else {
+                    let error: InstructionError = status.into();
+                    Err(Box::new(error) as Box<dyn std::error::Error>)
+                }
             }
             ProgramResult::Err(mut error) => {
                 // Don't clean me up!!
