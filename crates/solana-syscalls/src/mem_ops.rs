@@ -1,4 +1,39 @@
 use {super::*, crate::translate_mut};
+//tracing helpers
+use std::sync::OnceLock;
+struct WatchRange {
+    start: u64,
+    end: u64, // exclusive
+}
+
+fn get_watch_range() -> Option<&'static WatchRange> {
+    static RANGE: OnceLock<Option<WatchRange>> = OnceLock::new();
+    RANGE
+        .get_or_init(|| {
+            let range_str = std::env::var("SBPF_WATCH_RANGE").ok()?;
+            let (ws_str, wlen_str) = range_str.split_once(',')?;
+
+            let parse_hex = |s: &str| {
+                u64::from_str_radix(
+                    s.trim().trim_start_matches("0x").trim_start_matches("0X"),
+                    16,
+                )
+                .ok()
+            };
+
+            let ws = parse_hex(ws_str)?;
+            let wlen = parse_hex(wlen_str)?;
+            let we = ws.checked_add(wlen)?; // ← no silent wrap
+
+            Some(WatchRange { start: ws, end: we })
+        })
+        .as_ref()
+}
+
+fn overlaps(range: &WatchRange, addr: u64, n: u64) -> bool {
+    let end = addr.checked_add(n).unwrap_or(u64::MAX);
+    addr < range.end && end > range.start
+}
 
 fn mem_op_consume(invoke_context: &mut InvokeContext, n: u64) -> Result<(), Error> {
     let compute_cost = invoke_context.get_execution_cost();
@@ -139,10 +174,29 @@ fn memmove(
     src_addr: u64,
     n: u64,
 ) -> Result<u64, Error> {
+    if let Some(watch) = get_watch_range() {
+        let dst_hit = overlaps(watch, dst_addr, n);
+        let src_hit = overlaps(watch, src_addr, n);
+
+        if dst_hit || src_hit {
+            eprintln!(
+                "[SBPF_WATCH_MEMMOVE] dst=0x{dst_addr:x} ({}hit) \
+                 src=0x{src_addr:x} ({}hit) n=0x{n:x}",
+                if dst_hit { "★ " } else { "" },
+                if src_hit { "★ " } else { "" },
+            );
+            /*
+                      // Optional: capture a backtrace when tracing is active
+                      #[cfg(debug_assertions)]
+                      eprintln!("{}", std::backtrace::Backtrace::capture());
+            */
+        }
+    }
+
+    // --- Core logic (unchanged) ---
     let check_aligned = invoke_context.get_check_aligned();
     let memory_mapping = invoke_context.memory_contexts.memory_mapping_mut()?;
-    // In a rare exception to the rule we manually translate addresses to a raw pointer rather than
-    // using `translate_mut!` because the src and dst memory regions may overlap for this syscall.
+
     touch_slice_mut::<MaybeUninit<u8>>(memory_mapping, dst_addr, n)?;
     let slice = translate_slice_inner!(
         memory_mapping,
@@ -153,6 +207,7 @@ fn memmove(
         check_aligned,
     )?;
     let src_ptr = translate_slice::<u8>(memory_mapping, src_addr, n, check_aligned)?.as_ptr();
+
     unsafe { std::ptr::copy(src_ptr.cast(), slice as *mut MaybeUninit<u8>, n as usize) };
     Ok(0)
 }
