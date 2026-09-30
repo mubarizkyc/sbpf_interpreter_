@@ -18,14 +18,28 @@ declare_builtin_function!(
         signers_seeds_addr: u64,
         signers_seeds_len: u64,
     ) -> Result<u64, Error> {
-        cpi_common::<Self>(
+        if std::env::var("SBPF_CPI_DEBUG").is_ok() {
+            eprintln!(
+                "[CPI_ENTRY] sol_invoke_signed_rust instruction_addr=0x{:x} account_infos_addr=0x{:x} account_infos_len={} signers_seeds_addr=0x{:x} signers_seeds_len={}",
+                instruction_addr, account_infos_addr, account_infos_len, signers_seeds_addr, signers_seeds_len,
+            );
+        }
+        let result = cpi_common::<Self>(
             invoke_context,
             instruction_addr,
             account_infos_addr,
             account_infos_len,
             signers_seeds_addr,
             signers_seeds_len,
-        )
+        );
+        if std::env::var("SBPF_CPI_DEBUG").is_ok() {
+            match &result {
+                Ok(v) => eprintln!("[CPI_EXIT] sol_invoke_signed_rust result=Ok({})", v),
+                Err(e) => eprintln!("[CPI_EXIT] sol_invoke_signed_rust result=Err({})", e),
+            }
+        }
+        result
+
     }
 );
 
