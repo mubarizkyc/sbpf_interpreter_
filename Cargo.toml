@@ -7,3 +7,31 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+solana-syscalls = { path = "crates/solana-syscalls", features = ["agave-unstable-api"], default-features = false }
+#solana-bpf-loader-program = { path = "crates/solana-bpf-loader-program", features = ["agave-unstable-api"], default-features = false }
+solana-program-runtime = { path = "crates/solana-program-runtime", features = ["agave-unstable-api", "dev-context-only-utils","metrics"] }
+solana-transaction-context = { path = "crates/solana-transaction-context", features = ["agave-unstable-api", "bincode", "dev-context-only-utils"] }
+solana-account = { version = "=4.7.0", features = ["bincode"] }
+solana-pubkey = { version = "=4.4.0" }
+solana-hash = { version = "=4.7.0" }
+solana-instruction = { version = "=4.0.0" }
+solana-clock = { version = "=4.0.0" }
+solana-rent = { version = "=4.5.0" }
+solana-epoch-schedule = { version = "=3.4.0" }
+solana-sdk-ids = { version = "=3.1.0" }
+solana-system-interface = { version = "=3.3.0", features = ["bincode"] }
+solana-svm-feature-set = { version = "=4.3.0", features = ["agave-unstable-api"] }
+solana-svm-log-collector = { version = "=4.3.0", features = ["agave-unstable-api"] }
+solana-svm-callback = { version = "=4.3.0", features = ["agave-unstable-api"] }
+solana-svm-timings = { version = "=4.3.0", features = ["agave-unstable-api"] }
+solana-sbpf = { path = "../sbpf", default-features = false }
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+clap = { version = "4", features = ["derive"] }
+base64 = "0.22"
+hex = "0.4"
+bs58 = "0.5"
+bincode = "1"
+anyhow = "1"
+solana-fee-structure = "4.1.0"

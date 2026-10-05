@@ -141,7 +141,7 @@ macro_rules! create_vm {
 ///
 /// The [`MemoryRegion`]s must satisfy the safety preconditions for
 /// [`MemoryMapping::new_uninitialized`].
-unsafe fn set_memory_context<'b>(
+pub unsafe fn set_memory_context<'b>(
     additional_initialized_regions: Vec<MemoryRegion>,
     accounts_metadata: Vec<SerializedAccountMetadata>,
     invoke_context: &mut InvokeContext<'b, 'b>,

@@ -1,0 +1,8661 @@
+{
+  "success": true,
+  "return_code": 47244640256,
+  "compute_units_consumed": 2291,
+  "logs": [],
+  "error": null,
+  "syscall_trace": [
+    {
+      "pc": 37434,
+      "name": "sol_memcpy_",
+      "args": [
+        8589938432,
+        8589938184,
+        248,
+        31,
+        0
+      ],
+      "result": 0,
+      "function_pc": 37402,
+      "call_depth": 1
+    },
+    {
+      "pc": 37434,
+      "name": "sol_memcpy_",
+      "args": [
+        8589938184,
+        8589938432,
+        248,
+        31,
+        0
+      ],
+      "result": 0,
+      "function_pc": 37402,
+      "call_depth": 1
+    }
+  ],
+  "mem_trace": [
+    {
+      "pc": 20922,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179869184,
+      "value": 12,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 24214,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946768,
+      "value": 8589938168,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24215,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24216,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179869184,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24244,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 0,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884934080,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24251,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24252,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24256,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179869192,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179869195,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179869194,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179869193,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884934080,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884934048,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934064,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934056,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934048,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884934048,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934072,
+      "value": 17179869264,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179869272,
+      "value": 10240,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179869196,
+      "value": 10240,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884934048,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884934008,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24385,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934024,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934016,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934008,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934032,
+      "value": 17179869280,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934040,
+      "value": 10240,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179889760,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934122,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934121,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934120,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934112,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934104,
+      "value": 17179869232,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934096,
+      "value": 12884934008,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884934048,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934088,
+      "value": 12884934048,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934080,
+      "value": 17179869200,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179889768,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179889771,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179889770,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179889769,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884934008,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933976,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933992,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933984,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933976,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933976,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934000,
+      "value": 17179889840,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179889848,
+      "value": 1264,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179889772,
+      "value": 1264,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933976,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933936,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933952,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933944,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933936,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933960,
+      "value": 17179889856,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933968,
+      "value": 1264,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179901360,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934170,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934169,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934168,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934160,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934152,
+      "value": 17179889808,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934144,
+      "value": 12884933936,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933976,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934136,
+      "value": 12884933976,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934128,
+      "value": 17179889776,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 2,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179901368,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 2,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 2,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179901371,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179901370,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179901369,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933936,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933904,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933920,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933912,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933904,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933904,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933928,
+      "value": 17179901440,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179901448,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179901372,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933904,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933864,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 2,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24385,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933880,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933872,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933864,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933888,
+      "value": 17179901456,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933896,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179911696,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934218,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934217,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934216,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934208,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934200,
+      "value": 17179901408,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934192,
+      "value": 12884933864,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933904,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934184,
+      "value": 12884933904,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934176,
+      "value": 17179901376,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 3,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 2,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179911704,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 3,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 3,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179911707,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179911706,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179911705,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933864,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933832,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933848,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933840,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933832,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933832,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933856,
+      "value": 17179911776,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179911784,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179911708,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933832,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933792,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 3,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933800,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933792,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933816,
+      "value": 17179911792,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933824,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179922200,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934266,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934265,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934264,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934256,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934248,
+      "value": 17179911744,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934240,
+      "value": 12884933792,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933832,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934232,
+      "value": 12884933832,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934224,
+      "value": 17179911712,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 4,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 3,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179922208,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 4,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 4,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179922211,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179922210,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179922209,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933792,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933760,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933776,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933768,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933760,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933760,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933784,
+      "value": 17179922280,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179922288,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179922212,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933760,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933720,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 4,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933736,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933728,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933720,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933744,
+      "value": 17179922296,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933752,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179932704,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934314,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934313,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934312,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934304,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934296,
+      "value": 17179922248,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934288,
+      "value": 12884933720,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933760,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934280,
+      "value": 12884933760,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934272,
+      "value": 17179922216,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 5,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 4,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179932712,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 5,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 5,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179932715,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179932714,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179932713,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933720,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933688,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933704,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933696,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933688,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933688,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933712,
+      "value": 17179932784,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179932792,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179932716,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933688,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933648,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 5,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933664,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933656,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933648,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933672,
+      "value": 17179932800,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933680,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179943208,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934362,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934361,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934360,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934352,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934344,
+      "value": 17179932752,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934336,
+      "value": 12884933648,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933688,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934328,
+      "value": 12884933688,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934320,
+      "value": 17179932720,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 6,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 5,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179943216,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 6,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 6,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179943219,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179943218,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179943217,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933648,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933616,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933632,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933624,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933616,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933616,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933640,
+      "value": 17179943288,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179943296,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179943220,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933616,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933576,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 6,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933592,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933584,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933576,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933600,
+      "value": 17179943304,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933608,
+      "value": 165,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179953712,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934410,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934409,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934408,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934400,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934392,
+      "value": 17179943256,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934384,
+      "value": 12884933576,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933616,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934376,
+      "value": 12884933616,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934368,
+      "value": 17179943224,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 7,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 6,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179953720,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 7,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 7,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179953723,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179953722,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179953721,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933576,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933544,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933560,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933552,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933544,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933544,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933568,
+      "value": 17179953792,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179953800,
+      "value": 82,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179953724,
+      "value": 82,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933544,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933504,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 7,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24385,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933520,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933512,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933504,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933528,
+      "value": 17179953808,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933536,
+      "value": 82,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179964136,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934458,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934457,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934456,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934448,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934440,
+      "value": 17179953760,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934432,
+      "value": 12884933504,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933544,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934424,
+      "value": 12884933544,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934416,
+      "value": 17179953728,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 8,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 7,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179964144,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 8,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 8,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179964147,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179964146,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179964145,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933504,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933472,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933488,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933480,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933472,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933472,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933496,
+      "value": 17179964216,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179964224,
+      "value": 82,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179964148,
+      "value": 82,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933472,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933432,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 8,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24385,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933448,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933440,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933432,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933456,
+      "value": 17179964232,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933464,
+      "value": 82,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179974560,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934506,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934505,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934504,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934496,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934488,
+      "value": 17179964184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934480,
+      "value": 12884933432,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933472,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934472,
+      "value": 12884933472,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934464,
+      "value": 17179964152,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 9,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 8,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179974568,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 9,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 9,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179974571,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179974570,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179974569,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933432,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933400,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933416,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933408,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933400,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933400,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933424,
+      "value": 17179974640,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179974648,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179974572,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933400,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933360,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 9,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24385,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933376,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933368,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933360,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933384,
+      "value": 17179974656,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933392,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179984896,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934554,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934553,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934552,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934544,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934536,
+      "value": 17179974608,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934528,
+      "value": 12884933360,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933400,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934520,
+      "value": 12884933400,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934512,
+      "value": 17179974576,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 10,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 9,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179984904,
+      "value": 9,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 10,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24299,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934520,
+      "value": 12884933400,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24300,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933400,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24305,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934512,
+      "value": 17179974576,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24306,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933400,
+      "value": 2,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24309,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934528,
+      "value": 12884933360,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24310,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933360,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24315,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933360,
+      "value": 2,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24318,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 12884934554,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24319,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24320,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 12884934553,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24321,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24322,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 12884934552,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24323,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24324,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934544,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24325,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24326,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934536,
+      "value": 17179974608,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24327,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24264,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24265,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934602,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24266,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24267,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934601,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24268,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24269,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934600,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24270,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24271,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934592,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24272,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934584,
+      "value": 17179974608,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24273,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934576,
+      "value": 12884933360,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24274,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934568,
+      "value": 12884933400,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24275,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934560,
+      "value": 17179974576,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24276,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589946875,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24277,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 12884934603,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24278,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 8589946879,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24279,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934607,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 11,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 10,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24287,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24289,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179984912,
+      "value": 255,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24290,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 11,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24339,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 11,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24340,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179984915,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24341,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24342,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179984914,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24343,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24344,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179984913,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24345,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933360,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933328,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24354,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933344,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24356,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933336,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24357,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933328,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24360,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933328,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24361,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933352,
+      "value": 17179984984,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24362,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179984992,
+      "value": 456,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24363,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 17179984916,
+      "value": 456,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21278,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933328,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 21299,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884901888,
+      "value": 12884933288,
+      "function_pc": 21276,
+      "call_depth": 2
+    },
+    {
+      "pc": 24372,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24376,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946784,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24377,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946832,
+      "value": 11,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24385,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24386,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24388,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933304,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24392,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24393,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933296,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24394,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933288,
+      "value": 1,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24397,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933312,
+      "value": 17179985000,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24398,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933320,
+      "value": 456,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24405,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24407,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179995696,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24408,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24409,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24420,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24423,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946808,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24424,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934650,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24425,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946816,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24426,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934649,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24427,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 12884934648,
+      "value": 0,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24428,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946800,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24429,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934640,
+      "value": 18446744073709551615,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24430,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934632,
+      "value": 17179984952,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24431,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934624,
+      "value": 12884933288,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24432,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946792,
+      "value": 12884933328,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24433,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934616,
+      "value": 12884933328,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24434,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934608,
+      "value": 17179984920,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24281,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24282,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946840,
+      "value": 11,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24223,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946824,
+      "value": 17179869184,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24225,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179995704,
+      "value": 18,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24226,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946864,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24227,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946768,
+      "value": 8589938168,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24228,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938184,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24229,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946856,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24230,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938176,
+      "value": 12884934080,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24231,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946848,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24232,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938168,
+      "value": 12,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24233,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938208,
+      "value": 18,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24235,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938200,
+      "value": 17179995712,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 24237,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938192,
+      "value": 17179995730,
+      "function_pc": 24214,
+      "call_depth": 1
+    },
+    {
+      "pc": 21076,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938208,
+      "value": 18,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21083,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938200,
+      "value": 17179995712,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21084,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938184,
+      "value": 12,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21085,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938176,
+      "value": 12884934080,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21086,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179995712,
+      "value": 16,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21088,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938192,
+      "value": 17179995730,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21101,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938104,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21102,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938112,
+      "value": 17179995730,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 1812,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179995712,
+      "value": 16,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 1813,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946584,
+      "value": 17,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 1816,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946576,
+      "value": 17179995713,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 1817,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589946599,
+      "value": 16,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 2115,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 17179995713,
+      "value": 1,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 2116,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589946728,
+      "value": 1,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 2122,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946544,
+      "value": 1,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 2127,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179995714,
+      "value": 1000000,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 2129,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 17179995722,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 2130,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946584,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 2132,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946576,
+      "value": 17179995730,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 2135,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946552,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 2136,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589946560,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3084,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946584,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3094,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946560,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3099,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946552,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3102,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589946723,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3103,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938284,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3104,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589946720,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3105,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938281,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3106,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946751,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3107,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938295,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3108,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946744,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3109,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938288,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3110,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 8589946712,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3111,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938328,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3112,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946704,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3113,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938320,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3114,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946696,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3115,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938312,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3116,
+      "op": "load",
+      "size": 2,
+      "vm_addr": 8589946692,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3117,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938333,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3118,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589946688,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3119,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938329,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3120,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946664,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3121,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938344,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3122,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946672,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3123,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938352,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3124,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 8589946680,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3125,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938360,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3126,
+      "op": "load",
+      "size": 2,
+      "vm_addr": 8589946660,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3127,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938365,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3128,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589946656,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3129,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938361,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3130,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946632,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3131,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938376,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3132,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946640,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3133,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938384,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3134,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 8589946648,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3135,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938392,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3136,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589946624,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3137,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938393,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3138,
+      "op": "load",
+      "size": 2,
+      "vm_addr": 8589946628,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3139,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938397,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3140,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946448,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3143,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 8589946616,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3144,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946608,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3145,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946600,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3146,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938206,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3147,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938204,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3148,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946384,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3151,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938215,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3152,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938213,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3153,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946344,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3156,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938239,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3159,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938237,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3160,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938233,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3161,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938408,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3162,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938416,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3163,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938424,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3164,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938176,
+      "value": 1000000,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3165,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938184,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3166,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946392,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3167,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938220,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3168,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946296,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3169,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938244,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3170,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946304,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3171,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938256,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3172,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946280,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3173,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938268,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3174,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946360,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3175,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938304,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3176,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946320,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3177,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938336,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3178,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946256,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3179,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938368,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3180,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946240,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3181,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938400,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3182,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946248,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3183,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938399,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3184,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946312,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3185,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938367,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3186,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946352,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3187,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938335,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3188,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946368,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3189,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938303,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3190,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946328,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3191,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938280,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3192,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946264,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3193,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938278,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3194,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946376,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3195,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938276,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3196,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946272,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3197,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938264,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3198,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946288,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3199,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938252,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3200,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946336,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3201,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938240,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3202,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946400,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3203,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938232,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3204,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946408,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3205,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938228,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3206,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946416,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3207,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938216,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3208,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946424,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3209,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938212,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3210,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946432,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3211,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938208,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3212,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946456,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3213,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938207,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3214,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946440,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3215,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938202,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3216,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946464,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3217,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938201,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3218,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946536,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3219,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938200,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3220,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946496,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3221,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938196,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3222,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946488,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3223,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938194,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3224,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946504,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3225,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938193,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3226,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946544,
+      "value": 1,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3227,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938192,
+      "value": 1,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3228,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946480,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3229,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938175,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3230,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946528,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3231,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938174,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3232,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946512,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3233,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938172,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3234,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589946520,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3235,
+      "op": "store",
+      "size": 2,
+      "vm_addr": 8589938170,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3236,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938168,
+      "value": 16,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 3237,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938169,
+      "value": 0,
+      "function_pc": 1808,
+      "call_depth": 1
+    },
+    {
+      "pc": 21109,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 8589938168,
+      "value": 16,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21112,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589938172,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21113,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938683,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21114,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589938169,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21115,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938680,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21116,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938176,
+      "value": 1000000,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21117,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938096,
+      "value": 1000000,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21124,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938104,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21153,
+      "op": "store",
+      "size": 1,
+      "vm_addr": 8589938168,
+      "value": 16,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21154,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589938680,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21155,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938169,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21156,
+      "op": "load",
+      "size": 4,
+      "vm_addr": 8589938683,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21157,
+      "op": "store",
+      "size": 4,
+      "vm_addr": 8589938172,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21158,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938096,
+      "value": 1000000,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21159,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938176,
+      "value": 1000000,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21166,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938104,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21167,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589934600,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21168,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589934608,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21171,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589934592,
+      "value": 8589938168,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21175,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938112,
+      "value": 17179995730,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 4887,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589934592,
+      "value": 8589938168,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 4888,
+      "op": "load",
+      "size": 1,
+      "vm_addr": 8589938168,
+      "value": 16,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5190,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943312,
+      "value": 8589938168,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5197,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943304,
+      "value": 12884934272,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5201,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943296,
+      "value": 12884934176,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5205,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943280,
+      "value": 12884934416,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5207,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589943312,
+      "value": 8589938168,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5208,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943328,
+      "value": 12884934080,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5211,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943288,
+      "value": 12884934464,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5213,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943256,
+      "value": 12884934320,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5214,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943264,
+      "value": 12884934368,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5215,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943272,
+      "value": 12884934224,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5216,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943320,
+      "value": 17179995730,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5217,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589943328,
+      "value": 12884934080,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5221,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943336,
+      "value": 8589938120,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5224,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589943328,
+      "value": 12884934080,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5226,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943248,
+      "value": 12884934608,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 6040,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589943328,
+      "value": 12884934080,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 6042,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589943240,
+      "value": 12884934656,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5380,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589943336,
+      "value": 8589938120,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5381,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589943240,
+      "value": 12884934656,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 5382,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938128,
+      "value": 12884934656,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 6507,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938120,
+      "value": 9223372036854775818,
+      "function_pc": 4886,
+      "call_depth": 1
+    },
+    {
+      "pc": 21182,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938120,
+      "value": 9223372036854775818,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21184,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938136,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21185,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938160,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21186,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938128,
+      "value": 12884934656,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21187,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938152,
+      "value": 12884934656,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21188,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938120,
+      "value": 9223372036854775818,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21189,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 8589938144,
+      "value": 9223372036854775818,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 24719,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 8589938144,
+      "value": 9223372036854775818,
+      "function_pc": 24719,
+      "call_depth": 1
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934096,
+      "value": 12884934008,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934088,
+      "value": 12884934048,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934048,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934048,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934056,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934056,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934008,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934008,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934016,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884934016,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934144,
+      "value": 12884933936,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934136,
+      "value": 12884933976,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933976,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933976,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933984,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933984,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933936,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933936,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933944,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933944,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934192,
+      "value": 12884933864,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934184,
+      "value": 12884933904,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933904,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933904,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933912,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933912,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933864,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933864,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933872,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933872,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934240,
+      "value": 12884933792,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934232,
+      "value": 12884933832,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933832,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933832,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933840,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933840,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933792,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933792,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933800,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933800,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934288,
+      "value": 12884933720,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934280,
+      "value": 12884933760,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933760,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933760,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933768,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933768,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933720,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933720,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933728,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933728,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934336,
+      "value": 12884933648,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934328,
+      "value": 12884933688,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933688,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933688,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933696,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933696,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933648,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933648,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933656,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933656,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934384,
+      "value": 12884933576,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934376,
+      "value": 12884933616,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933616,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933616,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933624,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933624,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933576,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933576,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933584,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933584,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934432,
+      "value": 12884933504,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934424,
+      "value": 12884933544,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933544,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933544,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933552,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933552,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933504,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933504,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933512,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933512,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934480,
+      "value": 12884933432,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934472,
+      "value": 12884933472,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933472,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933472,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933480,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933480,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933432,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933432,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933440,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933440,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934528,
+      "value": 12884933360,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934520,
+      "value": 12884933400,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933400,
+      "value": 2,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933400,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933360,
+      "value": 2,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933360,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934576,
+      "value": 12884933360,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934568,
+      "value": 12884933400,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933400,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933400,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933408,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933408,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933360,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933360,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933368,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933368,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21249,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934624,
+      "value": 12884933288,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21250,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884934616,
+      "value": 12884933328,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21251,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933328,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21253,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933328,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21255,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933336,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21257,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933336,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21258,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933288,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21260,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933288,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21262,
+      "op": "load",
+      "size": 8,
+      "vm_addr": 12884933296,
+      "value": 1,
+      "function_pc": 0,
+      "call_depth": 0
+    },
+    {
+      "pc": 21264,
+      "op": "store",
+      "size": 8,
+      "vm_addr": 12884933296,
+      "value": 0,
+      "function_pc": 0,
+      "call_depth": 0
+    }
+  ]
+}
