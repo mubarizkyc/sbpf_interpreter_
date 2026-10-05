@@ -558,13 +558,20 @@ fn build_memory_mapping<'a>(
     invoke_context: &'a mut InvokeContext,
     executable: &Executable<InvokeContext>,
     feature_set: &SVMFeatureSet,
-) -> Result<(AlignedMemory<HOST_ALIGN>, Vec<AccountVmRange>)> {
+    compute_budget: SVMTransactionExecutionBudget,
+) -> Result<(
+    Vec<u8>,
+    Vec<u8>,
+    AlignedMemory<HOST_ALIGN>,
+    Vec<AccountVmRange>,
+    usize,
+)> {
     let instruction_context = invoke_context
         .transaction_context
         .get_current_instruction_context()
         .map_err(|e| anyhow!("get_current_instruction_context failed: {:?}", e))?;
     //translating the host runtime's data structures into the raw memory layout that the svm expects
-    let (parameter_bytes, regions, accounts_metadata, _instruction_data_offset) =
+    let (parameter_bytes, regions, accounts_metadata, instruction_data_offset) =
         serialization::serialize_parameters(
             &instruction_context,
             feature_set.virtual_address_space_adjustments,
@@ -575,56 +582,70 @@ fn build_memory_mapping<'a>(
 
     let is_loader_deprecated =
         instruction_context.get_program_owner()? == solana_sdk_ids::bpf_loader_deprecated::id();
+    let heap_size = compute_budget.heap_size as usize;
     let account_ranges: Vec<AccountVmRange> = accounts_metadata
         .iter()
         .enumerate()
         .filter(|(_, m)| m.original_data_len > 0)
         .map(|(idx, m)| AccountVmRange {
             vm_start: m.vm_data_addr,
-            vm_end: m
-                .vm_data_addr
-                .saturating_add(m.original_data_len as u64)
-                .saturating_add(if !is_loader_deprecated {
-                    MAX_PERMITTED_DATA_INCREASE as u64
-                } else {
-                    0
-                }),
+            vm_end: m.vm_data_addr + m.original_data_len as u64,
             account_idx: idx,
         })
         .collect();
-    //copied from solana_program_runtime::vm::set_mem_regions
-    let heap_size = invoke_context.get_compute_budget().heap_size;
-    let regions = [
-        MemoryRegion::new_empty(solana_sbpf::ebpf::MM_RODATA_START),
-        MemoryRegion::new_empty(solana_sbpf::ebpf::MM_STACK_START),
-        MemoryRegion::new_empty(solana_sbpf::ebpf::MM_HEAP_START),
-    ]
-    .into_iter()
-    .chain(regions) //additional_initialized_regions
-    .collect();
-    let memory_mapping = unsafe {
-        // SAFETY: all memory regions are `default` (and thus implicitly valid) or valid by
-        // delegating the safety invariant upon the caller.
-        MemoryMapping::new_uninitialized(
-            regions,
-            executable.get_config(),
-            executable.get_sbpf_version(),
-            invoke_context.transaction_context.access_violation_handler(
-                feature_set.virtual_address_space_adjustments,
-                feature_set.account_data_direct_mapping,
-            ),
-        )
-    };
 
+    // Get stack size from executable config
+    let stack_size = executable.get_config().stack_size();
+
+    // Allocate stack and heap
+    let mut stack_data = vec![0u8; stack_size];
+    let stack = HostBuffer::Mutable(std::ptr::slice_from_raw_parts_mut(
+        stack_data.as_mut_ptr(),
+        stack_size,
+    ));
+    let mut heap_data = vec![0u8; heap_size];
+    let heap = HostBuffer::Mutable(std::ptr::slice_from_raw_parts_mut(
+        heap_data.as_mut_ptr(),
+        heap_size,
+    ));
+
+    let sbpf_version = executable.get_sbpf_version();
+    let config = executable.get_config();
+    //dynamic stack frames ,are aviable in all version ,other than v0
+    let mut all_regions: Vec<MemoryRegion> = vec![
+        executable.get_ro_region(),
+        MemoryRegion::new_gapped(
+            stack,
+            ebpf::MM_STACK_START,
+            if !(sbpf_version >= SBPFVersion::V1) && config.enable_stack_frame_gaps {
+                config.stack_frame_size as u64
+            } else {
+                0
+            },
+        ),
+        MemoryRegion::new(heap, ebpf::MM_HEAP_START),
+    ];
+    all_regions.extend(regions);
+
+    let memory_mapping = unsafe {
+        MemoryMapping::new(all_regions, config, sbpf_version)
+            .map_err(|e| anyhow!("Failed to create memory mapping: {}", e))?
+    };
     invoke_context
         .memory_contexts
         .set_memory_context_abi_v1(MemoryContext::new(
-            BpfAllocator::new(heap_size as u64),
+            BpfAllocator::new(compute_budget.heap_size as u64), //from solana_program_entrypoint crate
             accounts_metadata,
             memory_mapping,
         ))
-        .map_err(|err| Box::new(err) as Box<dyn std::error::Error>);
-    Ok((parameter_bytes, account_ranges))
+        .unwrap();
+    Ok((
+        stack_data,
+        heap_data,
+        parameter_bytes,
+        account_ranges,
+        instruction_data_offset,
+    ))
 }
 
 fn extract_traces(cli: &Cli, vm: &solana_sbpf::vm::EbpfVm<InvokeContext>) -> ExecutionTraces {
@@ -989,16 +1010,21 @@ fn execute(
     invoke_context
         .push()
         .map_err(|e| anyhow!("invoke_context.push() failed: {:?}", e))?;
+
+    let (_stack_data, _heap_data, parameter_bytes, account_ranges, instruction_data_offset) =
+        build_memory_mapping(
+            &mut invoke_context,
+            &executable,
+            &feature_set,
+            compute_budget,
+        )?;
+    // Safety: we drop the VM before invoke_context goes out of scope
     let executable_ref = unsafe {
         mem::transmute::<
             &Executable<InvokeContext<'static, 'static>>,
             &Executable<InvokeContext<'_, '_>>,
         >(&executable)
     };
-    let (parameter_bytes, account_ranges) =
-        build_memory_mapping(&mut invoke_context, &executable, &feature_set)?;
-    // Safety: we drop the VM before invoke_context goes out of scope
-
     let mut vm = solana_sbpf::vm::EbpfVm::new(
         executable_ref.get_loader().clone(),
         executable.get_sbpf_version(),
@@ -1006,10 +1032,11 @@ fn execute(
         executable_ref.get_config().stack_size(),
     );
     vm.registers[1] = MM_INPUT_START;
-    vm.trace_config = build_trace_config(cli, program_id, executable_ref, account_ranges)?;
+    vm.registers[2] = instruction_data_offset as u64;
 
     let mut call_frames = solana_program_runtime::vm::MEMORY_POOL
         .with_borrow_mut(|memory_pool| memory_pool.get_call_frames());
+    vm.trace_config = build_trace_config(cli, program_id, executable_ref, account_ranges)?;
 
     let (compute_units_consumed, result) = vm.execute_program(
         executable_ref,
@@ -1021,9 +1048,16 @@ fn execute(
     // We map the internal VM trace buffers into our owned structs.
     let traces = extract_traces(cli, &vm);
     // Now it is safe to let `vm`, `invoke_context`, and `transaction_context` drop.
-    drop(parameter_bytes);
+    //
+    // Drop VM before accessing invoke_context
     drop(vm);
 
+    // Keep parameter_bytes alive until after VM execution
+    drop(parameter_bytes);
+
+    /*
+
+    */
     return Ok(ExecutionResults {
         compute_units_consumed,
         result,
