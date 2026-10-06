@@ -1,4 +1,5 @@
 use anyhow::{Context, Result, anyhow};
+pub mod tui;
 use base64::{Engine, engine::general_purpose::STANDARD as BASE64};
 use clap::Parser;
 use serde::{Deserialize, Serialize};
@@ -303,7 +304,16 @@ fn main() {
     let result = run();
     match result {
         Ok(output) => {
-            println!("{}", serde_json::to_string_pretty(&output).unwrap());
+            // If we have trace data, launch the interactive TUI
+            if output.insn_trace.is_some() {
+                if let Err(e) = crate::tui::launch_tui(output) {
+                    eprintln!("Failed to launch TUI: {:#}", e);
+                    std::process::exit(1);
+                }
+            } else {
+                // No trace data — just print JSON as before
+                println!("{}", serde_json::to_string_pretty(&output).unwrap());
+            }
         }
         Err(e) => {
             let output = Output {
