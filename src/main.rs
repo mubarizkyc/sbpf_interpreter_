@@ -589,7 +589,14 @@ fn build_memory_mapping<'a>(
         .filter(|(_, m)| m.original_data_len > 0)
         .map(|(idx, m)| AccountVmRange {
             vm_start: m.vm_data_addr,
-            vm_end: m.vm_data_addr + m.original_data_len as u64,
+            vm_end: m
+                .vm_data_addr
+                .saturating_add(m.original_data_len as u64)
+                .saturating_add(if !is_loader_deprecated {
+                    MAX_PERMITTED_DATA_INCREASE as u64
+                } else {
+                    0
+                }),
             account_idx: idx,
         })
         .collect();

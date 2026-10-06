@@ -21,6 +21,70 @@ pub mod tracing {
         pub cpi_decode_trace: Vec<CpiDecodeEntry>,
         pub program_elf_hashes: Vec<([u8; 32], [u8; 32])>,
     }
+    use std::fmt;
+
+    // Assuming these types exist in your scope.
+    // If they don't implement Display, we'll just use their Debug or summary info.
+    impl fmt::Display for TraceResults {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            writeln!(f, "=== Trace Results Summary ===")?;
+
+            // 1. Syscall Trace
+            writeln!(f, "Syscalls: {} entries", self.syscall_trace.len())?;
+            if !self.syscall_trace.is_empty() {
+                // Show last 3 syscalls as an example, or iterate all if small
+                for entry in self.syscall_trace.iter().rev().take(3).rev() {
+                    writeln!(f, "  - {:?}", entry)?; // Replace with custom formatting if SyscallTraceEntry implements Display
+                }
+            }
+
+            // 2. Memory Trace
+            writeln!(f, "Memory Accesses: {} entries", self.mem_trace.len())?;
+
+            // 3. Instruction Trace
+            writeln!(f, "Instructions: {} entries", self.insn_trace.len())?;
+
+            // 4. Call Trace
+            writeln!(f, "Function Calls: {} entries", self.call_trace.len())?;
+            if !self.call_trace.is_empty() {
+                for entry in &self.call_trace {
+                    writeln!(f, "  -> {:?}", entry)?;
+                }
+            }
+
+            // 5. Memory Dumps
+            writeln!(f, "Memory Dumps: {} results", self.mem_dump_results.len())?;
+
+            // 6. Register Snapshots
+            writeln!(
+                f,
+                "Register Snapshots: {} snapshots",
+                self.reg_snapshots.len()
+            )?;
+            if let Some(last_snapshot) = self.reg_snapshots.last() {
+                writeln!(f, "  Last Snapshot: {:?}", last_snapshot)?;
+            }
+
+            // 7. CPI Decode
+            writeln!(f, "CPI Decodes: {} entries", self.cpi_decode_trace.len())?;
+
+            // 8. Program ELF Hashes
+            writeln!(f, "Program ELF Hashes:")?;
+            for (code_hash, data_hash) in &self.program_elf_hashes {
+                writeln!(
+                    f,
+                    "  Code: {:?}, Data: {:?}",
+                    code_hash, // Requires 'hex' crate or custom hex formatter
+                    data_hash
+                )?;
+            }
+
+            writeln!(f, "=============================")
+        }
+    }
+
+    // Usage:
+    // println!("{}", trace_results);
 
     thread_local! {
         static TRACE_CONFIG: RefCell<Option<TraceConfig>> = RefCell::new(None);
@@ -39,7 +103,7 @@ pub mod tracing {
         TRACE_RESULTS.with(|r| r.borrow_mut().take())
     }
 
-    pub(crate) fn apply_trace_config_to_vm<C: solana_sbpf::vm::ContextObject>(
+    pub fn apply_trace_config_to_vm<C: solana_sbpf::vm::ContextObject>(
         vm: &mut solana_sbpf::vm::EbpfVm<'_, C>,
     ) {
         TRACE_CONFIG.with(|c| {
@@ -49,7 +113,7 @@ pub mod tracing {
         });
     }
 
-    pub(crate) fn extract_traces_from_vm<C: solana_sbpf::vm::ContextObject>(
+    pub fn extract_traces_from_vm<C: solana_sbpf::vm::ContextObject>(
         vm: &mut solana_sbpf::vm::EbpfVm<'_, C>,
     ) {
         TRACE_CONFIG.with(|c| {

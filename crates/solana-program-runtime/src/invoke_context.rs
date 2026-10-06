@@ -810,7 +810,7 @@ impl<'a, 'ix_data> InvokeContext<'a, 'ix_data> {
     }
 
     /// Insert a VM register trace
-    pub(crate) fn insert_register_trace(&mut self, register_trace: Vec<[u64; 12]>) {
+    pub fn insert_register_trace(&mut self, register_trace: Vec<[u64; 12]>) {
         if register_trace.is_empty() {
             return;
         }
