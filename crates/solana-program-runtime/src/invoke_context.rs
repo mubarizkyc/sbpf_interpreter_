@@ -237,6 +237,9 @@ pub struct InvokeContext<'a, 'ix_data> {
     pub total_nested_exec_time: Duration,
     pub timings: ExecuteDetailsTimings,
     pub memory_contexts: MemoryContexts,
+    //1 Solana Tx= N Solana ix's
+    //1 SOlana ix= N VM instructions
+    //each vm ix ,modifies the registetrs
     /// Pairs of index in TX instruction trace and VM register trace
     register_traces: Vec<(usize, Vec<[u64; 12]>)>,
     /// Debug port to use for this executing transaction.

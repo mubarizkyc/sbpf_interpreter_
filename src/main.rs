@@ -3,6 +3,9 @@ pub mod tui;
 use base64::{Engine, engine::general_purpose::STANDARD as BASE64};
 use clap::Parser;
 use serde::{Deserialize, Serialize};
+use solana_sbpf::aligned_memory::AlignedMemory;
+use solana_sbpf::ebpf::HOST_ALIGN;
+use solana_sbpf::vm::{AccountVmRange, TraceConfig};
 pub mod trace_helpers;
 use crate::trace_helpers::{
     DataFlowEntry, DiffResult, ExecutionResults, ExecutionTraces, compute_data_flow,
@@ -268,6 +271,7 @@ struct Output {
     compute_units_consumed: u64,
     logs: Vec<String>,
     error: Option<String>,
+    //8 results
     #[serde(skip_serializing_if = "Option::is_none")]
     syscall_trace: Option<Vec<SyscallTrace>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -296,10 +300,6 @@ impl InvokeContextCallback for MockCallback {}
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-use solana_sbpf::aligned_memory::AlignedMemory;
-use solana_sbpf::ebpf::HOST_ALIGN;
-use solana_sbpf::vm::{AccountVmRange, TraceConfig};
 fn main() {
     let result = run();
     match result {
@@ -603,6 +603,7 @@ fn build_trace_config(
                 "call" => cats.call = true,
                 "jump" => cats.jump = true,
                 "alu" => cats.alu = true,
+                "mem" => cats.mem = true,
                 other => {
                     return Err(anyhow!(
                         "unknown --trace-insn category '{}', valid: call,jump,alu",
@@ -932,8 +933,8 @@ fn run() -> Result<Output> {
     // Step 1: Input Preparation
     let (
         elf_bytes,
-        transaction_accounts,
-        instruction_accounts,
+        transaction_accounts, //1  tx,1 ix ,10
+        instruction_accounts, //1 ix, 10 accounts
         _instruction_account_metas,
         instruction_data,
         program_id,
