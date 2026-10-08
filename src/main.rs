@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 use solana_sbpf::aligned_memory::AlignedMemory;
 use solana_sbpf::ebpf::HOST_ALIGN;
 use solana_sbpf::vm::{AccountVmRange, TraceConfig};
+use solana_transaction_context::transaction::TransactionReturnData;
 pub mod trace_helpers;
 use crate::trace_helpers::{
     DataFlowEntry, DiffResult, ExecutionResults, ExecutionTraces, compute_data_flow,
@@ -288,6 +289,8 @@ struct Output {
     data_flow: Option<Vec<DataFlowEntry>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     diff_result: Option<DiffResult>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    trace_context: Option<TraceContext>,
 }
 
 // ---------------------------------------------------------------------------
@@ -330,6 +333,7 @@ fn main() {
                 cpi_decode_trace: None,
                 data_flow: None,
                 diff_result: None,
+                trace_context: None,
             };
             println!("{}", serde_json::to_string_pretty(&output).unwrap());
             std::process::exit(1);
@@ -347,11 +351,13 @@ fn build_memory_mapping<'a>(
     AlignedMemory<HOST_ALIGN>,
     Vec<AccountVmRange>,
     usize,
+    TraceContext,
 )> {
     let instruction_context = invoke_context
         .transaction_context
         .get_current_instruction_context()
         .map_err(|e| anyhow!("get_current_instruction_context failed: {:?}", e))?;
+
     //translating the host runtime's data structures into the raw memory layout that the svm expects
     let (parameter_bytes, regions, accounts_metadata, instruction_data_offset) =
         serialization::serialize_parameters(
@@ -382,7 +388,25 @@ fn build_memory_mapping<'a>(
             account_idx: idx,
         })
         .collect();
+    let mut accounts_info = Vec::new();
+    for range in &account_ranges {
+        // Grab the initial account bytes from the InvokeContext
+        let initial_data = instruction_context
+            .try_borrow_instruction_account(range.account_idx as u16)
+            .map(|acc| acc.get_data().to_vec()) // ✅ Copy the bytes into an owned Vec<u8>
+            .unwrap_or_default();
 
+        let is_writable = instruction_context
+            .is_instruction_account_writable(range.account_idx as u16)
+            .unwrap_or(false);
+
+        accounts_info.push(AccountTraceInfo {
+            idx: range.account_idx,
+            vm_start: range.vm_start,
+            initial_data: initial_data.to_vec(),
+            is_writable,
+        });
+    }
     // Get stack size from executable config
     let stack_size = executable.get_config().stack_size();
 
@@ -428,12 +452,21 @@ fn build_memory_mapping<'a>(
             memory_mapping,
         ))
         .unwrap();
+    let trace_context = TraceContext {
+        stack_base: ebpf::MM_STACK_START,
+        stack_size,
+        param_vm_addr: ebpf::MM_INPUT_START,
+        param_bytes: parameter_bytes.as_slice().to_vec(),
+        ix_data_offset: instruction_data_offset,
+        accounts: accounts_info,
+    };
     Ok((
         stack_data,
         heap_data,
         parameter_bytes,
         account_ranges,
         instruction_data_offset,
+        trace_context,
     ))
 }
 
@@ -707,6 +740,23 @@ fn build_trace_config(
         trace_alu_value_match: None,
     })
 }
+// Add this to your JSON Trace Output struct
+#[derive(Serialize)]
+pub struct TraceContext {
+    pub stack_base: u64, // Usually 0x2_0000_0000
+    pub stack_size: usize,
+    pub param_vm_addr: u64,    // Usually 0x4_0000_0000 (MM_INPUT_START)
+    pub param_bytes: Vec<u8>,  // The serialized metadata + IX data
+    pub ix_data_offset: usize, // Where the IX data starts inside param_bytes
+    pub accounts: Vec<AccountTraceInfo>,
+}
+#[derive(Serialize)]
+pub struct AccountTraceInfo {
+    pub idx: usize,
+    pub vm_start: u64,
+    pub initial_data: Vec<u8>, // Crucial for seeing what the program READS
+    pub is_writable: bool,
+}
 fn execute(
     cli: &Cli,
     elf_bytes: &[u8],
@@ -801,13 +851,20 @@ fn execute(
         .push()
         .map_err(|e| anyhow!("invoke_context.push() failed: {:?}", e))?;
 
-    let (_stack_data, _heap_data, parameter_bytes, account_ranges, instruction_data_offset) =
-        build_memory_mapping(
-            &mut invoke_context,
-            &executable,
-            &feature_set,
-            compute_budget,
-        )?;
+    let (
+        _stack_data,
+        _heap_data,
+        parameter_bytes,
+        account_ranges,
+        instruction_data_offset,
+        trace_context,
+    ) = build_memory_mapping(
+        &mut invoke_context,
+        &executable,
+        &feature_set,
+        compute_budget,
+    )?;
+
     // Safety: we drop the VM before invoke_context goes out of scope
     let executable_ref = unsafe {
         mem::transmute::<
@@ -854,6 +911,7 @@ fn execute(
         mem_dump_results: traces.mem_dump_results,
         reg_snapshots: traces.reg_snapshots,
         cpi_decode_trace: traces.cpi_decode_trace,
+        trace_context: Some(trace_context),
     });
 }
 fn collect_output(cli: &Cli, exec_results: ExecutionResults) -> Result<Output> {
@@ -873,7 +931,7 @@ fn collect_output(cli: &Cli, exec_results: ExecutionResults) -> Result<Output> {
         &exec_results.mem_trace,
         &exec_results.insn_trace,
     )?;
-
+    let trace_context = exec_results.trace_context;
     // 3. Data flow analysis
     let data_flow = compute_data_flow(cli, &exec_results.insn_trace)?;
 
@@ -893,6 +951,7 @@ fn collect_output(cli: &Cli, exec_results: ExecutionResults) -> Result<Output> {
             cpi_decode_trace: exec_results.cpi_decode_trace,
             data_flow,
             diff_result,
+            trace_context,
         }),
         solana_sbpf::error::ProgramResult::Ok(return_code) => Ok(Output {
             success: true,
@@ -908,6 +967,7 @@ fn collect_output(cli: &Cli, exec_results: ExecutionResults) -> Result<Output> {
             cpi_decode_trace: exec_results.cpi_decode_trace,
             data_flow,
             diff_result,
+            trace_context,
         }),
         solana_sbpf::error::ProgramResult::Err(e) => Ok(Output {
             success: false,
@@ -923,6 +983,7 @@ fn collect_output(cli: &Cli, exec_results: ExecutionResults) -> Result<Output> {
             cpi_decode_trace: exec_results.cpi_decode_trace,
             data_flow,
             diff_result,
+            trace_context,
         }),
     }
 }

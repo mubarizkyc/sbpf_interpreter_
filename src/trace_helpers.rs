@@ -8,7 +8,7 @@ use std::{fs, mem, rc::Rc, str::FromStr, sync::Arc};
 // Build memory mapping
 use crate::{
     AccountData, AccountsJson, Cli, CpiDecodeEntry, InsnTrace, MemDumpResult, MemTrace,
-    RegSnapshot, SyscallTrace,
+    RegSnapshot, SyscallTrace, TraceContext,
 };
 use solana_account::{AccountSharedData, ReadableAccount, WritableAccount};
 use solana_clock::Clock;
@@ -78,6 +78,7 @@ pub struct ExecutionResults {
     pub mem_dump_results: Option<Vec<MemDumpResult>>,
     pub reg_snapshots: Option<Vec<RegSnapshot>>,
     pub cpi_decode_trace: Option<Vec<CpiDecodeEntry>>,
+    pub trace_context: Option<TraceContext>,
 }
 pub struct ExecutionTraces {
     pub syscall_trace: Option<Vec<SyscallTrace>>,
