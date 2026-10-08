@@ -27,25 +27,39 @@ use std::collections::VecDeque;
 #[derive(PartialEq, Clone, Copy)]
 pub enum ActiveView {
     Stack,
-    Params,
-    Account(usize), // Index into vmem.accounts
+    IxData,   // window into input: [ix_data_offset, +ix_data_len)
+    RawInput, // full serialized region, toggle with 'r'
+    Account(usize),
 }
+
 #[derive(Clone)]
 pub struct MemRegion {
     pub name: String,
     pub vm_start: u64,
     pub data: Vec<u8>,
 }
-
 pub struct VirtualMemory {
     pub stack: MemRegion,
-    pub params: MemRegion,
+    pub input: MemRegion, // Renamed from 'params'
     pub accounts: Vec<MemRegion>,
     pub ix_data_offset: usize,
+    pub ix_data_len: usize,       // ADD THIS
+    pub program_id_offset: usize, // ADD THIS
 }
 
 impl VirtualMemory {
     pub fn new(ctx: &TraceContext) -> Self {
+        let base = ctx.param_vm_addr; // 17179869184 (0x400000000)
+
+        // Helper: Converts Absolute VM Address -> Buffer-Relative Index
+        let to_relative = |addr: usize| -> usize {
+            if (addr as u64) >= base {
+                addr - base as usize
+            } else {
+                addr // Fallback if it's already relative
+            }
+        };
+
         let accounts = ctx
             .accounts
             .iter()
@@ -59,24 +73,25 @@ impl VirtualMemory {
                 data: acc.initial_data.clone(),
             })
             .collect();
-
         Self {
             stack: MemRegion {
                 name: "Stack".into(),
                 vm_start: ctx.stack_base,
                 data: vec![0; ctx.stack_size],
             },
-            params: MemRegion {
-                name: "Params & IX Data".into(),
-                vm_start: ctx.param_vm_addr,
+            input: MemRegion {
+                name: "Input".into(),
+                vm_start: base,
                 data: ctx.param_bytes.clone(),
             },
             accounts,
-            ix_data_offset: ctx.ix_data_offset,
+            // APPLY THE FIX HERE:
+            ix_data_offset: to_relative(ctx.ix_data_offset), // Becomes 126528
+            ix_data_len: ctx.ix_data_len,                    // Stays 18
+            program_id_offset: to_relative(ctx.program_id_offset), // Becomes 126546
         }
     }
 
-    /// Routes memory events to the correct buffer
     pub fn apply(&mut self, m: &MemTrace) {
         if m.op != "store" {
             return;
@@ -84,7 +99,7 @@ impl VirtualMemory {
         let addr = m.vm_addr;
         let le = m.value.to_le_bytes();
 
-        // 1. Check Stack
+        // 1. Stack
         if addr >= self.stack.vm_start && addr < self.stack.vm_start + self.stack.data.len() as u64
         {
             let off = (addr - self.stack.vm_start) as usize;
@@ -95,21 +110,18 @@ impl VirtualMemory {
             }
             return;
         }
-
-        // 2. Check Params
-        if addr >= self.params.vm_start
-            && addr < self.params.vm_start + self.params.data.len() as u64
+        // 2. Input (The whole serialized blob)
+        if addr >= self.input.vm_start && addr < self.input.vm_start + self.input.data.len() as u64
         {
-            let off = (addr - self.params.vm_start) as usize;
+            let off = (addr - self.input.vm_start) as usize;
             for i in 0..(m.size as usize) {
-                if off + i < self.params.data.len() {
-                    self.params.data[off + i] = le[i];
+                if off + i < self.input.data.len() {
+                    self.input.data[off + i] = le[i];
                 }
             }
             return;
         }
-
-        // 3. Check Accounts
+        // 3. Accounts
         for acc in &mut self.accounts {
             if addr >= acc.vm_start && addr < acc.vm_start + acc.data.len() as u64 {
                 let off = (addr - acc.vm_start) as usize;
@@ -214,7 +226,53 @@ impl App {
         app.update_registers_forward();
         app
     }
-
+    fn view_spec(&self) -> (usize, usize, usize, String, bool) {
+        match self.active_view {
+            ActiveView::Stack => (
+                0,
+                0,
+                self.vmem.stack.data.len(),
+                format!(
+                    "STACK @0x{:X} ({} B)",
+                    self.vmem.stack.vm_start,
+                    self.vmem.stack.data.len()
+                ),
+                false,
+            ),
+            ActiveView::IxData => (
+                1,
+                self.vmem.ix_data_offset,
+                self.vmem.ix_data_len,
+                format!(
+                    "IX DATA @0x{:X} ({} B)",
+                    self.vmem.input.vm_start + self.vmem.ix_data_offset as u64,
+                    self.vmem.ix_data_len
+                ),
+                false,
+            ),
+            ActiveView::RawInput => (
+                1,
+                0,
+                self.vmem.input.data.len(),
+                format!(
+                    "RAW INPUT @0x{:X} ({} B) [r to collapse]",
+                    self.vmem.input.vm_start,
+                    self.vmem.input.data.len()
+                ),
+                false,
+            ),
+            ActiveView::Account(i) => match self.vmem.accounts.get(i) {
+                Some(w) => (
+                    2 + i,          // region index (0=stack, 1=input, 2+=accounts)
+                    0,              // start offset (always 0 for the MemRegion buffer)
+                    w.data.len(),   // length of the account data
+                    w.name.clone(), // title (e.g., "Acc #0 (W)")
+                    false,          // dim_ro flag (false = normal rendering)
+                ),
+                None => (0, 0, 0, "no accounts".into(), false),
+            },
+        }
+    }
     fn update_registers_forward(&mut self) {
         if let Some(insn) = self.current_insn() {
             if (insn.dst as usize) < 11 {
@@ -345,25 +403,33 @@ fn run_app<B: ratatui::backend::Backend>(
                         }
                     }
                     KeyCode::Tab => {
+                        app.mem_scroll = 0;
                         app.active_view = match app.active_view {
-                            ActiveView::Stack => ActiveView::Params,
-                            ActiveView::Params => {
+                            ActiveView::Stack => ActiveView::IxData,
+                            ActiveView::IxData | ActiveView::RawInput => {
                                 if app.vmem.accounts.is_empty() {
                                     ActiveView::Stack
                                 } else {
                                     ActiveView::Account(0)
                                 }
                             }
-                            ActiveView::Account(idx) => {
-                                if idx + 1 < app.vmem.accounts.len() {
-                                    ActiveView::Account(idx + 1)
+                            ActiveView::Account(i) => {
+                                if i + 1 < app.vmem.accounts.len() {
+                                    ActiveView::Account(i + 1)
                                 } else {
                                     ActiveView::Stack
                                 }
                             }
                         };
-                        app.mem_scroll = 0; // Reset scroll when switching tabs
                     }
+                    KeyCode::Char('r') => {
+                        app.mem_scroll = 0;
+                        app.active_view = match app.active_view {
+                            ActiveView::IxData => ActiveView::RawInput,
+                            _ => ActiveView::IxData,
+                        };
+                    }
+
                     KeyCode::Char('q') => app.should_quit = true,
                     KeyCode::Char('j') | KeyCode::PageDown => {
                         // Scroll memory view DOWN (16 bytes = 1 row)
@@ -426,6 +492,20 @@ fn ui(f: &mut Frame, app: &mut App) {
         Color::Red
     };
 
+    // Extract first 8 bytes of Program ID for the header
+    let pid_str = app
+        .vmem
+        .input
+        .data
+        .get(app.vmem.program_id_offset..app.vmem.program_id_offset + 32)
+        .map(|b| {
+            bs58::encode(b)
+                .into_string()
+                .chars()
+                .take(8)
+                .collect::<String>()
+        })
+        .unwrap_or_else(|| "unknown".into());
     let header_text = Line::from(vec![
         Span::raw("SBPF Time-Travel Debugger | "),
         Span::styled(
@@ -438,8 +518,14 @@ fn ui(f: &mut Frame, app: &mut App) {
                 .fg(Color::Yellow)
                 .add_modifier(Modifier::BOLD),
         ),
-        Span::raw(" | "),
-        Span::raw(format!("CUs: {}", app.trace_data.compute_units_consumed)),
+        Span::raw(format!(
+            " | CUs: {} | ",
+            app.trace_data.compute_units_consumed
+        )),
+        Span::styled(
+            format!("Prog: …{} ", pid_str),
+            Style::default().fg(Color::Magenta),
+        ), // ADD THIS
         Span::raw(" | Status: "),
         Span::styled(
             status_str,
@@ -591,28 +677,45 @@ fn ui(f: &mut Frame, app: &mut App) {
     app.mem_viewport_rows = visible_rows;
 
     // 1. Resolve current buffer based on Active Tab
-    let (current_buf, current_base, title) = match app.active_view {
-        ActiveView::Stack => (&app.vmem.stack.data, app.vmem.stack.vm_start, "STACK"),
-        ActiveView::Params => (
-            &app.vmem.params.data,
-            app.vmem.params.vm_start,
-            "PARAMS & IX DATA",
+    // 1. Resolve current buffer AND the specific window we are allowed to scroll within
+    let (current_buf, current_base, title, view_start, view_len) = match app.active_view {
+        ActiveView::Stack => (
+            &app.vmem.stack.data,
+            app.vmem.stack.vm_start,
+            "STACK".to_string(),
+            0,
+            app.vmem.stack.data.len(),
         ),
-        ActiveView::Account(idx) => (
-            &app.vmem.accounts[idx].data,
-            app.vmem.accounts[idx].vm_start,
-            app.vmem.accounts[idx].name.as_str(),
+        ActiveView::IxData => (
+            &app.vmem.input.data,
+            app.vmem.input.vm_start,
+            "IX DATA".to_string(),
+            app.vmem.ix_data_offset,
+            app.vmem.ix_data_len, // ONLY SCROLL WITHIN IX DATA
         ),
+        ActiveView::RawInput => (
+            &app.vmem.input.data,
+            app.vmem.input.vm_start,
+            "RAW INPUT [r to collapse]".to_string(),
+            0,
+            app.vmem.input.data.len(),
+        ),
+        ActiveView::Account(idx) => {
+            let acc = &app.vmem.accounts[idx];
+            (&acc.data, acc.vm_start, acc.name.clone(), 0, acc.data.len())
+        }
     };
-
     app.mem_scroll &= !15; // Align to 16-byte rows
-    let max_scroll = current_buf.len().saturating_sub(visible_rows * 16);
+
+    // FIX 1: Max scroll must be based on the VIEW length, not the entire buffer length!
+    let max_scroll = view_len.saturating_sub(visible_rows * 16);
     if app.mem_scroll > max_scroll {
         app.mem_scroll = max_scroll;
     }
 
-    let start = app.mem_scroll;
-    let end = std::cmp::min(start + visible_rows * 16, current_buf.len());
+    // FIX 2: Apply view_start offset here, and DO NOT overwrite it below!
+    let start = view_start + app.mem_scroll;
+    let end = std::cmp::min(start + visible_rows * 16, view_start + view_len);
 
     // 2. Get current step's memory event for live highlighting
     let cur_event = app
@@ -636,15 +739,19 @@ fn ui(f: &mut Frame, app: &mut App) {
     lines.push(Line::from(vec![
         Span::styled(" Stack ", tab_style(app.active_view == ActiveView::Stack)),
         Span::raw(" | "),
-        Span::styled(" Params ", tab_style(app.active_view == ActiveView::Params)),
+        Span::styled(
+            " IX Data ",
+            tab_style(app.active_view == ActiveView::IxData),
+        ),
+        Span::raw(" | "),
+        Span::styled(" Raw ", tab_style(app.active_view == ActiveView::RawInput)),
         Span::raw(" | "),
         Span::styled(
             " Accounts ",
             tab_style(matches!(app.active_view, ActiveView::Account(_))),
         ),
-        // In ui(), replace the existing tab hint span:
         Span::styled(
-            "  [Tab] switch | [j/k] scroll mem | [n/p] step",
+            "  [Tab] switch | [r] raw/ix | [j/k] scroll | [n/p] step",
             Style::default().fg(Color::DarkGray),
         ),
     ]));
@@ -653,8 +760,11 @@ fn ui(f: &mut Frame, app: &mut App) {
     // Status Line
     match cur_event {
         Some(m) => {
-            let in_view =
-                m.vm_addr >= current_base && m.vm_addr < current_base + current_buf.len() as u64;
+            // FIX 3: Check if the event is inside the specific VIEW window, not the whole buffer
+            let view_vm_start = current_base + view_start as u64;
+            let view_vm_end = view_vm_start + view_len as u64;
+            let in_view = m.vm_addr >= view_vm_start && m.vm_addr < view_vm_end;
+
             let color = if m.op == "store" {
                 Color::Red
             } else {
@@ -705,32 +815,40 @@ fn ui(f: &mut Frame, app: &mut App) {
                 let addr = current_base + (i + j) as u64;
                 let byte_offset = i + j;
 
-                // Base styling
+                // 1. Base styling (dim zeros)
                 let mut style = if b == 0 {
                     Style::default().fg(Color::DarkGray)
                 } else {
                     Style::default()
                 };
 
-                // AUDITOR TRICK: Highlight Instruction Data in the Params tab!
-                if app.active_view == ActiveView::Params && byte_offset >= app.vmem.ix_data_offset {
+                // 2. Instruction Data Highlighting (Cyan)
+                // Only applies when viewing the Raw Input or IxData buffers
+                let is_ix_data =
+                    matches!(app.active_view, ActiveView::RawInput | ActiveView::IxData)
+                        && byte_offset >= app.vmem.ix_data_offset
+                        && byte_offset < app.vmem.ix_data_offset + app.vmem.ix_data_len;
+
+                if is_ix_data {
                     style = style
                         .fg(Color::Black)
                         .bg(Color::Cyan)
                         .add_modifier(Modifier::BOLD);
                 }
 
-                // Live Step Highlighting (Red for Write, Blue for Read)
+                // 3. Live Step Highlighting (Red for Write, Blue for Read)
+                // This is checked LAST so it overrides the Cyan background.
+                // This lets you see exactly when the program reads/writes the IX data!
                 if let Some(m) = cur_event {
                     if addr >= m.vm_addr && addr < m.vm_addr + m.size as u64 {
                         style = if m.op == "store" {
                             Style::default()
-                                .fg(Color::Black)
+                                .fg(Color::White) // White on Red is much easier to read
                                 .bg(Color::Red)
                                 .add_modifier(Modifier::BOLD)
                         } else {
                             Style::default()
-                                .fg(Color::Black)
+                                .fg(Color::White) // White on Blue
                                 .bg(Color::Blue)
                                 .add_modifier(Modifier::BOLD)
                         };

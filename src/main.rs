@@ -367,7 +367,20 @@ fn build_memory_mapping<'a>(
             feature_set.direct_account_pointers_in_program_input,
         )
         .map_err(|e| anyhow!("serialize_parameters failed: {:?}", e))?;
-
+    println!("parameter_bytes len: {:?}", parameter_bytes.len());
+    println!("ix_data_offset: {:?}", instruction_data_offset);
+    println!(
+        "program_id_offset: {:?}",
+        instruction_data_offset + instruction_context.get_instruction_data().len()
+    );
+    println!(
+        "ix_data_len: {:?}",
+        instruction_context.get_instruction_data().len()
+    );
+    println!(
+        "ix_data: {:?}",
+        hex::encode(instruction_context.get_instruction_data())
+    );
     let is_loader_deprecated =
         instruction_context.get_program_owner()? == solana_sdk_ids::bpf_loader_deprecated::id();
     let heap_size = compute_budget.heap_size as usize;
@@ -452,6 +465,7 @@ fn build_memory_mapping<'a>(
             memory_mapping,
         ))
         .unwrap();
+    let ix_data_len = instruction_context.get_instruction_data().len();
     let trace_context = TraceContext {
         stack_base: ebpf::MM_STACK_START,
         stack_size,
@@ -459,6 +473,8 @@ fn build_memory_mapping<'a>(
         param_bytes: parameter_bytes.as_slice().to_vec(),
         ix_data_offset: instruction_data_offset,
         accounts: accounts_info,
+        ix_data_len,
+        program_id_offset: instruction_data_offset + ix_data_len,
     };
     Ok((
         stack_data,
@@ -745,10 +761,12 @@ fn build_trace_config(
 pub struct TraceContext {
     pub stack_base: u64, // Usually 0x2_0000_0000
     pub stack_size: usize,
-    pub param_vm_addr: u64,    // Usually 0x4_0000_0000 (MM_INPUT_START)
-    pub param_bytes: Vec<u8>,  // The serialized metadata + IX data
-    pub ix_data_offset: usize, // Where the IX data starts inside param_bytes
+    pub param_vm_addr: u64,   // Usually 0x4_0000_0000 (MM_INPUT_START)
+    pub param_bytes: Vec<u8>, // The serialized metadata + IX data
     pub accounts: Vec<AccountTraceInfo>,
+    pub ix_data_offset: usize,
+    pub ix_data_len: usize,       // ADD THIS
+    pub program_id_offset: usize, // ADD THIS
 }
 #[derive(Serialize)]
 pub struct AccountTraceInfo {
