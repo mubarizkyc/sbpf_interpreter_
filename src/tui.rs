@@ -7,6 +7,7 @@ use crossterm::{
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
+use indexmap::IndexMap;
 use ratatui::{
     Frame, Terminal,
     backend::CrosstermBackend,
@@ -566,133 +567,195 @@ fn ui(f: &mut Frame, app: &mut App) {
         .as_ref()
         .map_or(&empty_descs, |v| v);
 
-    // 1. Disassembly (Smart Formatting)
-    //the code will pass vecotr of desc strings
-    // zip insns with their official desc strings
-    let items: Vec<ListItem> = insns
+    // ── Build deduplicated view ──────────────────────────────────────────────
+    // unique_pcs: ordered list of PCs in first-seen order (preserves code layout)
+    // pc_to_row:  PC → index in the display list
+    // row_to_trace_idx: display row → current trace index for that PC
+    //             (updated each step so annotations always show current values)
+
+    // 1. Collect unique PCs in first-seen order
+    let mut seen_pcs: IndexMap<u64, usize> = IndexMap::new(); // pc → display row
+    for (trace_idx, insn) in insns.iter().enumerate() {
+        seen_pcs.entry(insn.pc).or_insert(trace_idx);
+    }
+
+    // 2. Current step's PC — used to find which display row to highlight
+    let current_pc = insns.get(app.insn_index).map(|i| i.pc).unwrap_or(0);
+
+    // 3. Build a vec of (display_insn, display_desc) using the LATEST trace
+    //    entry for each PC, so annotations show current iteration's values.
+    //    Walk the trace up to insn_index to find the last occurrence of each PC.
+    let mut pc_latest: HashMap<u64, (usize, usize)> = HashMap::new(); // pc → (trace_idx, desc_idx)
+    for idx in 0..=app.insn_index.min(insns.len().saturating_sub(1)) {
+        let pc = insns[idx].pc;
+        pc_latest.insert(pc, (idx, idx));
+    }
+
+    // 4. Build items in first-seen order, using latest values
+    let unique_entries: Vec<(&InsnTrace, &String)> = seen_pcs
         .iter()
-        .zip(descs.iter())
-        .map(|(insn, desc)| {
-            // ── col 1: pc ───────────────────────────────────────────────────
+        .map(|(pc, _first_idx)| {
+            // use the latest trace entry for this PC (up to current step)
+            let latest_idx = pc_latest.get(pc).map(|(i, _)| *i).unwrap_or(*_first_idx); // fall back to first if not yet executed
+            // but if not yet reached, use first occurrence for static desc
+            let desc_idx = pc_latest.get(pc).map(|(_, d)| *d).unwrap_or(*_first_idx);
+            (&insns[latest_idx], &descs[desc_idx])
+        })
+        .collect();
+
+    // 5. Find which display row the current step maps to
+    let current_display_row = seen_pcs.get_index_of(&current_pc).unwrap_or(0);
+
+    // sync the list state to follow current execution
+    app.list_state.select(Some(current_display_row));
+
+    // 6. Render — same span logic as before, but on unique_entries
+    let items: Vec<ListItem> = unique_entries
+        .iter()
+        .enumerate()
+        .map(|(display_idx, (insn, desc))| {
+            // dim instructions not yet reached
+            let not_yet_reached = !pc_latest.contains_key(&insn.pc);
+            // mark the currently-executing instruction
+            let is_current = insn.pc == current_pc;
+            // detect instructions that are part of a loop
+            // (executed more than once in the trace so far)
+            let exec_count = insns[..=app.insn_index.min(insns.len().saturating_sub(1))]
+                .iter()
+                .filter(|i| i.pc == insn.pc)
+                .count();
+            let is_loop = exec_count > 1;
+
             let mut spans = vec![
+                // iteration count badge — shows how many times this PC was hit
+                if is_loop {
+                    Span::styled(
+                        format!("×{:<3} ", exec_count),
+                        Style::default().fg(Color::Magenta),
+                    )
+                } else {
+                    Span::styled("     ", Style::default())
+                },
                 Span::styled(
                     format!("{:05} ", insn.pc),
-                    Style::default().fg(Color::DarkGray),
+                    if not_yet_reached {
+                        Style::default().fg(Color::DarkGray)
+                    } else {
+                        Style::default().fg(Color::DarkGray)
+                    },
                 ),
-                // ── col 2: official disassembly, fixed width ─────────────────
-                Span::styled(format!("{:<40}", desc), Style::default().fg(Color::White)),
-                // separator
+                Span::styled(
+                    format!("{:<40}", desc),
+                    if not_yet_reached {
+                        Style::default().fg(Color::DarkGray) // dimmed — not yet executed
+                    } else {
+                        Style::default().fg(Color::White)
+                    },
+                ),
                 Span::styled("│ ", Style::default().fg(Color::DarkGray)),
             ];
 
-            // ── col 3: dynamic annotation — only signal, no noise ───────────
-            match insn.category {
-                "alu" => {
-                    if insn.dst_val_before != insn.dst_val_after {
+            // only show dynamic annotations for reached instructions
+            if !not_yet_reached {
+                match insn.category {
+                    "alu" => {
+                        if insn.dst_val_before != insn.dst_val_after {
+                            spans.push(Span::styled(
+                                format!("{:#018x}", insn.dst_val_before),
+                                Style::default().fg(Color::DarkGray),
+                            ));
+                            spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
+                            spans.push(Span::styled(
+                                format!("{:#018x}", insn.dst_val_after),
+                                Style::default()
+                                    .fg(Color::Green)
+                                    .add_modifier(Modifier::BOLD),
+                            ));
+                        }
+                        if !insn.is_imm && insn.src != insn.dst {
+                            spans.push(Span::styled(
+                                format!("   r{}={:#x}", insn.src, insn.src_val),
+                                Style::default().fg(Color::DarkGray),
+                            ));
+                        }
+                    }
+                    "load" => {
                         spans.push(Span::styled(
-                            format!("{:#018x}", insn.dst_val_before),
+                            format!("[{:#x}]", insn.src_val),
                             Style::default().fg(Color::DarkGray),
                         ));
                         spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
                         spans.push(Span::styled(
                             format!("{:#018x}", insn.dst_val_after),
                             Style::default()
-                                .fg(Color::Green)
+                                .fg(Color::Cyan)
                                 .add_modifier(Modifier::BOLD),
                         ));
                     }
-                    // use is_imm directly — no more string sniffing
-                    if !insn.is_imm && insn.src != insn.dst {
+                    "store" => {
+                        let written = if insn.is_imm {
+                            format!("{:#x}", insn.imm)
+                        } else {
+                            format!("{:#018x}", insn.src_val)
+                        };
                         spans.push(Span::styled(
-                            format!("   r{}={:#x}", insn.src, insn.src_val),
-                            Style::default().fg(Color::DarkGray),
-                        ));
-                    }
-                }
-
-                "load" => {
-                    spans.push(Span::styled(
-                        format!("[{:#x}]", insn.src_val),
-                        Style::default().fg(Color::DarkGray),
-                    ));
-                    spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
-                    spans.push(Span::styled(
-                        format!("{:#018x}", insn.dst_val_after),
-                        Style::default()
-                            .fg(Color::Cyan)
-                            .add_modifier(Modifier::BOLD),
-                    ));
-                }
-
-                "store" => {
-                    // is_imm store: the value written is insn.imm, not src_val
-                    let written = if insn.is_imm {
-                        format!("{:#x}", insn.imm)
-                    } else {
-                        format!("{:#018x}", insn.src_val)
-                    };
-                    spans.push(Span::styled(
-                        written,
-                        Style::default()
-                            .fg(Color::Yellow)
-                            .add_modifier(Modifier::BOLD),
-                    ));
-                    spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
-                    spans.push(Span::styled(
-                        format!("[{:#x}]", insn.dst_val_before),
-                        Style::default().fg(Color::DarkGray),
-                    ));
-                }
-
-                "jump" => {
-                    match insn.branch_taken {
-                        Some(true) => spans.push(Span::styled(
-                            "✔ ",
-                            Style::default()
-                                .fg(Color::Green)
-                                .add_modifier(Modifier::BOLD),
-                        )),
-                        Some(false) => spans.push(Span::styled(
-                            "✘ ",
-                            Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
-                        )),
-                        None => {} // ja — unconditional, no verdict needed
-                    }
-                    // use is_imm directly
-                    spans.push(Span::styled(
-                        format!("r{}={:#x}", insn.dst, insn.dst_val_before),
-                        Style::default().fg(Color::DarkGray),
-                    ));
-                    if !insn.is_imm {
-                        spans.push(Span::styled(
-                            format!("  r{}={:#x}", insn.src, insn.src_val),
-                            Style::default().fg(Color::DarkGray),
-                        ));
-                    }
-                }
-
-                "call" => {
-                    if insn.opcode_name == "exit" {
-                        // exit lives in the call category — show the return value
-                        spans.push(Span::styled(
-                            format!("r0={:#018x}", insn.dst_val_before),
+                            written,
                             Style::default()
                                 .fg(Color::Yellow)
                                 .add_modifier(Modifier::BOLD),
                         ));
-                    } else {
+                        spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
                         spans.push(Span::styled(
-                            format!("fn@{:#x}", insn.function_pc),
-                            Style::default().fg(Color::Magenta),
-                        ));
-                        spans.push(Span::styled(
-                            format!("  depth={}", insn.call_depth),
+                            format!("[{:#x}]", insn.dst_val_before),
                             Style::default().fg(Color::DarkGray),
                         ));
                     }
+                    "jump" => {
+                        match insn.branch_taken {
+                            Some(true) => spans.push(Span::styled(
+                                "✔ ",
+                                Style::default()
+                                    .fg(Color::Green)
+                                    .add_modifier(Modifier::BOLD),
+                            )),
+                            Some(false) => spans.push(Span::styled(
+                                "✘ ",
+                                Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                            )),
+                            None => {}
+                        }
+                        spans.push(Span::styled(
+                            format!("r{}={:#x}", insn.dst, insn.dst_val_before),
+                            Style::default().fg(Color::DarkGray),
+                        ));
+                        if !insn.is_imm {
+                            spans.push(Span::styled(
+                                format!("  r{}={:#x}", insn.src, insn.src_val),
+                                Style::default().fg(Color::DarkGray),
+                            ));
+                        }
+                    }
+                    "call" => {
+                        if insn.opcode_name == "exit" {
+                            spans.push(Span::styled(
+                                format!("r0={:#018x}", insn.dst_val_before),
+                                Style::default()
+                                    .fg(Color::Yellow)
+                                    .add_modifier(Modifier::BOLD),
+                            ));
+                        } else {
+                            spans.push(Span::styled(
+                                format!("fn@{:#x}", insn.function_pc),
+                                Style::default().fg(Color::Magenta),
+                            ));
+                            spans.push(Span::styled(
+                                format!("  depth={}", insn.call_depth),
+                                Style::default().fg(Color::DarkGray),
+                            ));
+                        }
+                    }
+                    _ => {}
                 }
-
-                _ => {}
             }
 
             ListItem::new(Line::from(spans))

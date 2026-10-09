@@ -2392,6 +2392,7 @@ dependencies = [
  "clap",
  "crossterm",
  "hex",
+ "indexmap",
  "ratatui",
  "serde",
  "serde_json",
