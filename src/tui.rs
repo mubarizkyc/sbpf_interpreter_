@@ -680,8 +680,11 @@ fn ui(f: &mut Frame, app: &mut App) {
                         }
                     }
                     "load" => {
+                        // Compute effective address: src_val + off
+                        let eff_addr = insn.src_val.wrapping_add(insn.off as i64 as u64);
+
                         spans.push(Span::styled(
-                            format!("[{:#x}]", insn.src_val),
+                            format!("[{:#x}]", eff_addr), // Now shows the REAL address
                             Style::default().fg(Color::DarkGray),
                         ));
                         spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
@@ -692,6 +695,7 @@ fn ui(f: &mut Frame, app: &mut App) {
                                 .add_modifier(Modifier::BOLD),
                         ));
                     }
+
                     "store" => {
                         let written = if insn.is_imm {
                             format!("{:#x}", insn.imm)
@@ -705,8 +709,11 @@ fn ui(f: &mut Frame, app: &mut App) {
                                 .add_modifier(Modifier::BOLD),
                         ));
                         spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
+
+                        // Compute effective address: dst_val_before + off
+                        let eff_addr = insn.dst_val_before.wrapping_add(insn.off as i64 as u64);
                         spans.push(Span::styled(
-                            format!("[{:#x}]", insn.dst_val_before),
+                            format!("[{:#x}]", eff_addr), // Now shows the REAL address
                             Style::default().fg(Color::DarkGray),
                         ));
                     }
