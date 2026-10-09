@@ -588,11 +588,10 @@ fn ui(f: &mut Frame, app: &mut App) {
             // ── col 3: dynamic annotation — only signal, no noise ───────────
             match insn.category {
                 "alu" => {
-                    // only show mutation: before→after, skip if value unchanged
                     if insn.dst_val_before != insn.dst_val_after {
                         spans.push(Span::styled(
                             format!("{:#018x}", insn.dst_val_before),
-                            Style::default().fg(Color::DarkGray), // old value, dimmed
+                            Style::default().fg(Color::DarkGray),
                         ));
                         spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
                         spans.push(Span::styled(
@@ -602,9 +601,8 @@ fn ui(f: &mut Frame, app: &mut App) {
                                 .add_modifier(Modifier::BOLD),
                         ));
                     }
-                    // src reg value only for reg-reg ops (src==0 means r0 which
-                    // is a real reg, so gate on category instead)
-                    if !insn.opcode_name.to_lowercase().contains("imm") && insn.src != insn.dst {
+                    // use is_imm directly — no more string sniffing
+                    if !insn.is_imm && insn.src != insn.dst {
                         spans.push(Span::styled(
                             format!("   r{}={:#x}", insn.src, insn.src_val),
                             Style::default().fg(Color::DarkGray),
@@ -613,8 +611,6 @@ fn ui(f: &mut Frame, app: &mut App) {
                 }
 
                 "load" => {
-                    // effective address = src_val + off (already baked in src_val
-                    // at trace time ideally, otherwise show base + offset)
                     spans.push(Span::styled(
                         format!("[{:#x}]", insn.src_val),
                         Style::default().fg(Color::DarkGray),
@@ -629,9 +625,14 @@ fn ui(f: &mut Frame, app: &mut App) {
                 }
 
                 "store" => {
-                    // what value went where
+                    // is_imm store: the value written is insn.imm, not src_val
+                    let written = if insn.is_imm {
+                        format!("{:#x}", insn.imm)
+                    } else {
+                        format!("{:#018x}", insn.src_val)
+                    };
                     spans.push(Span::styled(
-                        format!("{:#018x}", insn.src_val),
+                        written,
                         Style::default()
                             .fg(Color::Yellow)
                             .add_modifier(Modifier::BOLD),
@@ -644,7 +645,6 @@ fn ui(f: &mut Frame, app: &mut App) {
                 }
 
                 "jump" => {
-                    // verdict first — the most important thing
                     match insn.branch_taken {
                         Some(true) => spans.push(Span::styled(
                             "✔ ",
@@ -656,14 +656,14 @@ fn ui(f: &mut Frame, app: &mut App) {
                             "✘ ",
                             Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
                         )),
-                        None => {}
+                        None => {} // ja — unconditional, no verdict needed
                     }
-                    // the values that drove the decision
+                    // use is_imm directly
                     spans.push(Span::styled(
                         format!("r{}={:#x}", insn.dst, insn.dst_val_before),
                         Style::default().fg(Color::DarkGray),
                     ));
-                    if !insn.opcode_name.to_lowercase().contains("imm") {
+                    if !insn.is_imm {
                         spans.push(Span::styled(
                             format!("  r{}={:#x}", insn.src, insn.src_val),
                             Style::default().fg(Color::DarkGray),
@@ -672,25 +672,24 @@ fn ui(f: &mut Frame, app: &mut App) {
                 }
 
                 "call" => {
-                    // function_pc tells you exactly where you're jumping into
-                    spans.push(Span::styled(
-                        format!("fn@{:#x}", insn.function_pc),
-                        Style::default().fg(Color::Magenta),
-                    ));
-                    spans.push(Span::styled(
-                        format!("  depth={}", insn.call_depth),
-                        Style::default().fg(Color::DarkGray),
-                    ));
-                }
-
-                // exit: show final return value in r0
-                "exit" => {
-                    spans.push(Span::styled(
-                        format!("r0={:#018x}", insn.dst_val_before),
-                        Style::default()
-                            .fg(Color::Yellow)
-                            .add_modifier(Modifier::BOLD),
-                    ));
+                    if insn.opcode_name == "exit" {
+                        // exit lives in the call category — show the return value
+                        spans.push(Span::styled(
+                            format!("r0={:#018x}", insn.dst_val_before),
+                            Style::default()
+                                .fg(Color::Yellow)
+                                .add_modifier(Modifier::BOLD),
+                        ));
+                    } else {
+                        spans.push(Span::styled(
+                            format!("fn@{:#x}", insn.function_pc),
+                            Style::default().fg(Color::Magenta),
+                        ));
+                        spans.push(Span::styled(
+                            format!("  depth={}", insn.call_depth),
+                            Style::default().fg(Color::DarkGray),
+                        ));
+                    }
                 }
 
                 _ => {}
