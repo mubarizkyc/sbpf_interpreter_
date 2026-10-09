@@ -1,4 +1,6 @@
-use crate::{InsnTrace, MemTrace, Output, SyscallTrace};
+use crate::{
+    InsnTrace, MemTrace, Output, SyscallTrace, trace_helpers::disassemble_instruction_for_tracing,
+};
 use anyhow::Result;
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
@@ -465,10 +467,16 @@ fn run_app<B: ratatui::backend::Backend>(
         }
     }
 }
-
 // ==========================================
 // 4. UI RENDERING
 // ==========================================
+fn signed_off_str(value: i16) -> String {
+    if value < 0 {
+        format!("-{:#x}", -(value as isize))
+    } else {
+        format!("+{value:#x}")
+    }
+}
 
 fn ui(f: &mut Frame, app: &mut App) {
     let chunks = Layout::default()
@@ -551,66 +559,147 @@ fn ui(f: &mut Frame, app: &mut App) {
         .insn_trace
         .as_ref()
         .map_or(&empty_insns, |v| v);
+    let empty_descs: Vec<String> = vec![];
+    let descs = app
+        .trace_data
+        .insn_desc
+        .as_ref()
+        .map_or(&empty_descs, |v| v);
 
     // 1. Disassembly (Smart Formatting)
+    //the code will pass vecotr of desc strings
+    // zip insns with their official desc strings
     let items: Vec<ListItem> = insns
         .iter()
-        .map(|insn| {
+        .zip(descs.iter())
+        .map(|(insn, desc)| {
+            // ── col 1: pc ───────────────────────────────────────────────────
             let mut spans = vec![
-                Span::raw(format!("{:05} ", insn.pc)),
                 Span::styled(
-                    format!("{:<12}", insn.opcode_name),
-                    Style::default().fg(Color::Cyan),
+                    format!("{:05} ", insn.pc),
+                    Style::default().fg(Color::DarkGray),
                 ),
+                // ── col 2: official disassembly, fixed width ─────────────────
+                Span::styled(format!("{:<40}", desc), Style::default().fg(Color::White)),
+                // separator
+                Span::styled("│ ", Style::default().fg(Color::DarkGray)),
             ];
 
-            // Smart formatting based on instruction type
-            if insn.category == "jump" {
-                // Show Branch Taken status and Target
-                if let Some(taken) = insn.branch_taken {
-                    let (symbol, color) = if taken {
-                        ("✔", Color::Green)
-                    } else {
-                        ("✘", Color::Red)
-                    };
-                    spans.push(Span::styled(
-                        format!(" [{}] ", symbol),
-                        Style::default().fg(color),
-                    ));
-                    if let Some(target) = insn.branch_target {
+            // ── col 3: dynamic annotation — only signal, no noise ───────────
+            match insn.category {
+                "alu" => {
+                    // only show mutation: before→after, skip if value unchanged
+                    if insn.dst_val_before != insn.dst_val_after {
                         spans.push(Span::styled(
-                            format!("-> {:05}", target),
-                            Style::default().fg(Color::Yellow),
+                            format!("{:#018x}", insn.dst_val_before),
+                            Style::default().fg(Color::DarkGray), // old value, dimmed
+                        ));
+                        spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
+                        spans.push(Span::styled(
+                            format!("{:#018x}", insn.dst_val_after),
+                            Style::default()
+                                .fg(Color::Green)
+                                .add_modifier(Modifier::BOLD),
                         ));
                     }
-                } else {
-                    spans.push(Span::raw(" (Unconditional)"));
+                    // src reg value only for reg-reg ops (src==0 means r0 which
+                    // is a real reg, so gate on category instead)
+                    if !insn.opcode_name.to_lowercase().contains("imm") && insn.src != insn.dst {
+                        spans.push(Span::styled(
+                            format!("   r{}={:#x}", insn.src, insn.src_val),
+                            Style::default().fg(Color::DarkGray),
+                        ));
+                    }
                 }
-            } else if insn.opcode_name.starts_with("LD_") {
-                // LOAD: reg[dst] = mem[reg[src] + off]
-                spans.push(Span::styled(
-                    format!("r{} = ", insn.dst),
-                    Style::default().fg(Color::Green),
-                ));
-                spans.push(Span::raw(format!("mem[r{} + {}]", insn.src, insn.off)));
-            } else if insn.opcode_name.starts_with("ST_") {
-                // STORE: mem[reg[dst] + off] = reg[src]
-                spans.push(Span::raw(format!("mem[r{} + {}] = ", insn.dst, insn.off)));
-                spans.push(Span::styled(
-                    format!("r{}", insn.src),
-                    Style::default().fg(Color::Red),
-                ));
-            } else {
-                // ALU / Call (Standard format)
-                spans.push(Span::raw(format!(
-                    "dst:r{} src:r{} imm:{}",
-                    insn.dst, insn.src, insn.imm
-                )));
+
+                "load" => {
+                    // effective address = src_val + off (already baked in src_val
+                    // at trace time ideally, otherwise show base + offset)
+                    spans.push(Span::styled(
+                        format!("[{:#x}]", insn.src_val),
+                        Style::default().fg(Color::DarkGray),
+                    ));
+                    spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
+                    spans.push(Span::styled(
+                        format!("{:#018x}", insn.dst_val_after),
+                        Style::default()
+                            .fg(Color::Cyan)
+                            .add_modifier(Modifier::BOLD),
+                    ));
+                }
+
+                "store" => {
+                    // what value went where
+                    spans.push(Span::styled(
+                        format!("{:#018x}", insn.src_val),
+                        Style::default()
+                            .fg(Color::Yellow)
+                            .add_modifier(Modifier::BOLD),
+                    ));
+                    spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
+                    spans.push(Span::styled(
+                        format!("[{:#x}]", insn.dst_val_before),
+                        Style::default().fg(Color::DarkGray),
+                    ));
+                }
+
+                "jump" => {
+                    // verdict first — the most important thing
+                    match insn.branch_taken {
+                        Some(true) => spans.push(Span::styled(
+                            "✔ ",
+                            Style::default()
+                                .fg(Color::Green)
+                                .add_modifier(Modifier::BOLD),
+                        )),
+                        Some(false) => spans.push(Span::styled(
+                            "✘ ",
+                            Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                        )),
+                        None => {}
+                    }
+                    // the values that drove the decision
+                    spans.push(Span::styled(
+                        format!("r{}={:#x}", insn.dst, insn.dst_val_before),
+                        Style::default().fg(Color::DarkGray),
+                    ));
+                    if !insn.opcode_name.to_lowercase().contains("imm") {
+                        spans.push(Span::styled(
+                            format!("  r{}={:#x}", insn.src, insn.src_val),
+                            Style::default().fg(Color::DarkGray),
+                        ));
+                    }
+                }
+
+                "call" => {
+                    // function_pc tells you exactly where you're jumping into
+                    spans.push(Span::styled(
+                        format!("fn@{:#x}", insn.function_pc),
+                        Style::default().fg(Color::Magenta),
+                    ));
+                    spans.push(Span::styled(
+                        format!("  depth={}", insn.call_depth),
+                        Style::default().fg(Color::DarkGray),
+                    ));
+                }
+
+                // exit: show final return value in r0
+                "exit" => {
+                    spans.push(Span::styled(
+                        format!("r0={:#018x}", insn.dst_val_before),
+                        Style::default()
+                            .fg(Color::Yellow)
+                            .add_modifier(Modifier::BOLD),
+                    ));
+                }
+
+                _ => {}
             }
 
             ListItem::new(Line::from(spans))
         })
         .collect();
+
     let disassembly = List::new(items)
         .block(
             Block::default()

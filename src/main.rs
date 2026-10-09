@@ -10,7 +10,7 @@ use solana_transaction_context::transaction::TransactionReturnData;
 pub mod trace_helpers;
 use crate::trace_helpers::{
     DataFlowEntry, DiffResult, ExecutionResults, ExecutionTraces, compute_data_flow,
-    compute_diff_result, parse_pubkey, prepare_inputs,
+    compute_diff_result, disassemble_instruction_for_tracing, parse_pubkey, prepare_inputs,
 };
 use solana_sbpf::error::ProgramResult;
 use std::cell::RefCell;
@@ -280,6 +280,8 @@ struct Output {
     #[serde(skip_serializing_if = "Option::is_none")]
     insn_trace: Option<Vec<InsnTrace>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    insn_desc: Option<Vec<String>>, //formatted ix's as per the sbpf module
+    #[serde(skip_serializing_if = "Option::is_none")]
     mem_dump_results: Option<Vec<MemDumpResult>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     reg_snapshots: Option<Vec<RegSnapshot>>,
@@ -328,6 +330,7 @@ fn main() {
                 syscall_trace: None,
                 mem_trace: None,
                 insn_trace: None,
+                insn_desc: None,
                 mem_dump_results: None,
                 reg_snapshots: None,
                 cpi_decode_trace: None,
@@ -919,6 +922,25 @@ fn execute(
 
     // Keep parameter_bytes alive until after VM execution
     drop(parameter_bytes);
+    //build the desc for for insc trace
+    let mut insn_desc = Vec::new();
+    for insn_trace in traces.insn_trace.as_ref().unwrap() {
+        let insn = ebpf::Insn {
+            opc: insn_trace.opcode,
+            dst: insn_trace.dst,
+            src: insn_trace.src,
+            off: insn_trace.off,
+            imm: insn_trace.imm as i64,
+            ptr: insn_trace.pc as usize,
+        };
+        insn_desc.push(disassemble_instruction_for_tracing(
+            &insn,
+            insn_trace.pc as usize,
+            executable.get_function_registry(),
+            executable.get_loader(),
+            executable.get_sbpf_version(),
+        ))
+    }
     return Ok(ExecutionResults {
         compute_units_consumed,
         result,
@@ -926,6 +948,7 @@ fn execute(
         syscall_trace: traces.syscall_trace,
         mem_trace: traces.mem_trace,
         insn_trace: traces.insn_trace,
+        insn_desc: Some(insn_desc), //for tui ,rendring
         mem_dump_results: traces.mem_dump_results,
         reg_snapshots: traces.reg_snapshots,
         cpi_decode_trace: traces.cpi_decode_trace,
@@ -964,6 +987,7 @@ fn collect_output(cli: &Cli, exec_results: ExecutionResults) -> Result<Output> {
             syscall_trace: exec_results.syscall_trace,
             mem_trace: exec_results.mem_trace,
             insn_trace: exec_results.insn_trace,
+            insn_desc: exec_results.insn_desc,
             mem_dump_results: exec_results.mem_dump_results,
             reg_snapshots: exec_results.reg_snapshots,
             cpi_decode_trace: exec_results.cpi_decode_trace,
@@ -980,6 +1004,7 @@ fn collect_output(cli: &Cli, exec_results: ExecutionResults) -> Result<Output> {
             syscall_trace: exec_results.syscall_trace,
             mem_trace: exec_results.mem_trace,
             insn_trace: exec_results.insn_trace,
+            insn_desc: exec_results.insn_desc,
             mem_dump_results: exec_results.mem_dump_results,
             reg_snapshots: exec_results.reg_snapshots,
             cpi_decode_trace: exec_results.cpi_decode_trace,
@@ -996,6 +1021,7 @@ fn collect_output(cli: &Cli, exec_results: ExecutionResults) -> Result<Output> {
             syscall_trace: exec_results.syscall_trace,
             mem_trace: exec_results.mem_trace,
             insn_trace: exec_results.insn_trace,
+            insn_desc: exec_results.insn_desc,
             mem_dump_results: exec_results.mem_dump_results,
             reg_snapshots: exec_results.reg_snapshots,
             cpi_decode_trace: exec_results.cpi_decode_trace,
