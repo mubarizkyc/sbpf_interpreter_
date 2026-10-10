@@ -761,12 +761,10 @@ fn ui(f: &mut Frame, app: &mut App) {
     // row_to_trace_idx: display row → current trace index for that PC
     //             (updated each step so annotations always show current values)
 
-    let descs = app
-        .trace_data
-        .insn_desc
-        .as_ref()
-        .cloned()
-        .unwrap_or_default();
+    let descs = app.trace_data.insn_desc.as_ref();
+
+    // Then in the map closure:
+
     let insns_rc = app.trace_data.insn_trace.as_ref(); // or restructure borrows; clone is fine once/frame
 
     let items: Vec<ListItem> = app
@@ -775,7 +773,7 @@ fn ui(f: &mut Frame, app: &mut App) {
         .enumerate()
         .map(|(row, &pc)| {
             let desc = descs
-                .get(app.first_idx[row])
+                .and_then(|d| d.get(app.first_idx[row]))
                 .map(|s| s.as_str())
                 .unwrap_or("");
             let reached = app.latest_exec[row].is_some();

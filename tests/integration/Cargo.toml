@@ -1,0 +1,16 @@
+[package]
+name = "integration-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+litesvm = { path = "../../crates/litesvm-dbg" }
+solana-pubkey = "=3.0.0"
+solana-instruction = "=3.1.0"
+solana-sdk-ids = "=3.1.0"
+solana-message = "=3.0.1"
+solana-transaction = { version = "=3.0.2", features = ["verify"] }
+solana-keypair = "=3.1.0"
+solana-signer = "=3.0.0"
+hex = "0.4"

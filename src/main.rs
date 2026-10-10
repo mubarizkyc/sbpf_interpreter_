@@ -1,28 +1,24 @@
-//#![allow(warnings)]
-use anyhow::{Context, Result, anyhow};
-pub mod tui;
-use base64::{Engine, engine::general_purpose::STANDARD as BASE64};
+use anyhow::{Result, anyhow};
 use clap::Parser;
 use serde::{Deserialize, Serialize};
+use std::{mem, sync::Arc};
+
+// Solana SBPF imports
 use solana_sbpf::aligned_memory::AlignedMemory;
 use solana_sbpf::ebpf::HOST_ALIGN;
 use solana_sbpf::vm::{AccountVmRange, TraceConfig};
-use solana_transaction_context::transaction::TransactionReturnData;
-pub mod trace_helpers;
-use crate::trace_helpers::{
-    DataFlowEntry, DiffResult, ExecutionResults, ExecutionTraces, compute_data_flow,
-    compute_diff_result, disassemble_instruction_for_tracing, parse_pubkey, prepare_inputs,
+use solana_sbpf::{
+    ebpf,
+    memory_region::{MemoryMapping, MemoryRegion},
+    program::SBPFVersion,
 };
-use solana_sbpf::error::ProgramResult;
-use std::cell::RefCell;
-use std::{fs, mem, rc::Rc, str::FromStr, sync::Arc};
-// Build memory mapping
-use solana_account::{AccountSharedData, ReadableAccount, WritableAccount};
-use solana_clock::Clock;
-use solana_epoch_schedule::EpochSchedule;
+use solana_sbpf::{
+    ebpf::MM_INPUT_START, elf::Executable, memory_region::HostBuffer, verifier::RequisiteVerifier,
+};
+
+// Solana SDK and runtime imports
 use solana_fee_structure::FeeStructure;
 use solana_hash::Hash;
-use solana_instruction::AccountMeta;
 use solana_program_runtime::{
     execution_budget::{SVMTransactionExecutionBudget, SVMTransactionExecutionCost},
     invoke_context::{BpfAllocator, EnvironmentConfig, InvokeContext},
@@ -35,14 +31,6 @@ use solana_program_runtime::{
 };
 use solana_pubkey::Pubkey;
 use solana_rent::Rent;
-use solana_sbpf::{
-    ebpf,
-    memory_region::{MemoryMapping, MemoryRegion},
-    program::SBPFVersion,
-};
-use solana_sbpf::{
-    ebpf::MM_INPUT_START, elf::Executable, memory_region::HostBuffer, verifier::RequisiteVerifier,
-};
 use solana_sdk_ids::bpf_loader_upgradeable;
 use solana_svm_callback::InvokeContextCallback;
 use solana_svm_feature_set::SVMFeatureSet;
@@ -52,13 +40,25 @@ use solana_transaction_context::{
     instruction_accounts::InstructionAccount, transaction::TransactionContext,
     transaction_accounts::KeyedAccountSharedData,
 };
+
+// Internal module imports
+pub mod desc_generator;
+pub mod trace_helpers;
+pub mod tui;
+use crate::desc_generator::disassemble_instruction_for_tracing;
+use crate::trace_helpers::{
+    DataFlowEntry, DiffResult, ExecutionResults, ExecutionTraces, compute_data_flow,
+    compute_diff_result, parse_pubkey, prepare_inputs,
+};
 const MAX_PERMITTED_DATA_INCREASE: usize = 10240; //from crate solana_account_info
 #[derive(Parser, Debug)]
 #[command(
-    name = "sbpf-interpreter",
+    name = "sbpf_interpreter_",
     about = "Execute sBPF ELF programs in interpreter mode"
 )]
 struct Cli {
+    #[arg(long, default_value_t = false)]
+    tui: bool,
     /// Path to the sBPF ELF .so file
     #[arg(long)]
     program: String,
@@ -308,17 +308,12 @@ impl InvokeContextCallback for MockCallback {}
 // Helpers
 // ---------------------------------------------------------------------------
 fn main() {
-    let result = run();
-    match result {
+    let tui_mode = std::env::args().any(|a| a == "--tui");
+    match run() {
         Ok(output) => {
-            // If we have trace data, launch the interactive TUI
-            if output.insn_trace.is_some() {
-                if let Err(e) = crate::tui::launch_tui(output) {
-                    eprintln!("Failed to launch TUI: {:#}", e);
-                    std::process::exit(1);
-                }
+            if tui_mode {
+                tui::launch_tui(output).unwrap();
             } else {
-                // No trace data — just print JSON as before
                 println!("{}", serde_json::to_string_pretty(&output).unwrap());
             }
         }
@@ -332,15 +327,19 @@ fn main() {
                 syscall_trace: None,
                 mem_trace: None,
                 insn_trace: None,
-                insn_desc: None,
                 mem_dump_results: None,
                 reg_snapshots: None,
                 cpi_decode_trace: None,
                 data_flow: None,
                 diff_result: None,
+                insn_desc: None,
                 trace_context: None,
             };
-            println!("{}", serde_json::to_string_pretty(&output).unwrap());
+            if tui_mode {
+                let _ = tui::launch_tui(output);
+            } else {
+                println!("{}", serde_json::to_string_pretty(&output).unwrap());
+            }
             std::process::exit(1);
         }
     }
@@ -1067,6 +1066,7 @@ fn run() -> Result<Output> {
     // Step 3: Post-Processing & Output Generation
     collect_output(&cli, exec_results)
 }
+
 /*
 fn legacy_run() -> Result<Output> {
     let cli = Cli::parse();
