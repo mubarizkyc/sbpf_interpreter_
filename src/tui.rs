@@ -409,15 +409,8 @@ impl App {
 pub fn launch_tui(output: Output) -> Result<()> {
     // Convert Option<Vec<...>> into the flat TraceData the TUI expects
 
-    // Validate that we actually have instruction data to display
-    /*
-        if output.insn_trace.as_ref().map_or(true, |v| v.is_empty()) {
-            return Err(anyhow!(
-                "No instruction trace data available. \
-                 Re-run with --trace-program <PUBKEY> --trace-insn call,jump,alu"
-            ));
-        }
-    */
+    // TODO: Validate that we actually have instruction data to display
+
     // Setup terminal
     enable_raw_mode()?;
     let mut stdout = io::stdout();
@@ -532,15 +525,9 @@ fn run_app<B: ratatui::backend::Backend>(
     }
 }
 // ==========================================
-// 4. UI RENDERING
+// UI RENDERING
 // ==========================================
-fn signed_off_str(value: i16) -> String {
-    if value < 0 {
-        format!("-{:#x}", -(value as isize))
-    } else {
-        format!("+{value:#x}")
-    }
-}
+
 /// Dynamic annotation column: the live values for ONE executed instruction.
 /// Shared by the trace view and the flow view.
 fn annotate_spans(insn: &InsnTrace) -> Vec<Span> {
@@ -917,45 +904,25 @@ fn ui(f: &mut Frame, app: &mut App) {
     // Subtract 6 for: Top border, Bottom border, Tabs line, Empty line, Status line, Empty line
     let visible_rows = mem_area.height.saturating_sub(6) as usize;
     app.mem_viewport_rows = visible_rows;
+    // 1. Use view_spec() instead of duplicating the logic
+    let (region_idx, view_start, view_len, title, _dim_ro) = app.view_spec();
 
-    // 1. Resolve current buffer based on Active Tab
-    // 1. Resolve current buffer AND the specific window we are allowed to scroll within
-    let (current_buf, current_base, title, view_start, view_len) = match app.active_view {
-        ActiveView::Stack => (
-            &app.vmem.stack.data,
-            app.vmem.stack.vm_start,
-            "STACK".to_string(),
-            0,
-            app.vmem.stack.data.len(),
+    // Get the actual buffer based on region_idx
+    let (current_buf, current_base) = match region_idx {
+        0 => (&app.vmem.stack.data, app.vmem.stack.vm_start),
+        1 => (&app.vmem.input.data, app.vmem.input.vm_start),
+        idx => (
+            &app.vmem.accounts[idx - 2].data,
+            app.vmem.accounts[idx - 2].vm_start,
         ),
-        ActiveView::IxData => (
-            &app.vmem.input.data,
-            app.vmem.input.vm_start,
-            "IX DATA".to_string(),
-            app.vmem.ix_data_offset,
-            app.vmem.ix_data_len, // ONLY SCROLL WITHIN IX DATA
-        ),
-        ActiveView::RawInput => (
-            &app.vmem.input.data,
-            app.vmem.input.vm_start,
-            "RAW INPUT [r to collapse]".to_string(),
-            0,
-            app.vmem.input.data.len(),
-        ),
-        ActiveView::Account(idx) => {
-            let acc = &app.vmem.accounts[idx];
-            (&acc.data, acc.vm_start, acc.name.clone(), 0, acc.data.len())
-        }
     };
-    app.mem_scroll &= !15; // Align to 16-byte rows
 
-    // FIX 1: Max scroll must be based on the VIEW length, not the entire buffer length!
+    app.mem_scroll &= !15;
     let max_scroll = view_len.saturating_sub(visible_rows * 16);
     if app.mem_scroll > max_scroll {
         app.mem_scroll = max_scroll;
     }
 
-    // FIX 2: Apply view_start offset here, and DO NOT overwrite it below!
     let start = view_start + app.mem_scroll;
     let end = std::cmp::min(start + visible_rows * 16, view_start + view_len);
 
