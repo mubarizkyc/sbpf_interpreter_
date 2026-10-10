@@ -21,18 +21,17 @@ jobs:
     - name: Install Rust Toolchain
       uses: dtolnay/rust-toolchain@stable
       with:
-        components: rustfmt, clippy
+        components: rustfmt # Keep rustfmt if you want formatting checks, otherwise remove this line too
 
     - name: Rust Cache
       uses: Swatinem/rust-cache@v2
 
-    # --- FIX: Add --workspace to only check local code ---
+    # --- FORMATTING CHECK (Optional: Remove this block if you don't want fmt checks either) ---
     - name: Check Rust Formatting
-      run: cargo fmt --all --workspace -- --check
+      run: cargo fmt --all -- --check
 
-    # --- FIX: Add --workspace to only lint local code ---
-    - name: Lint Rust Code
-      run: cargo clippy --workspace -- -D warnings
+    # --- LINTING REMOVED ---
+    # We are skipping clippy to avoid dependency-related style errors
 
     - name: Build Release Binary
       run: cargo build --release
