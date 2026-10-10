@@ -60,6 +60,7 @@ name = "solana_program_runtime"
 crate-type = ["lib"]
 path = "src/lib.rs"
 
+
 [dependencies.base64]
 version = "0.22.1"
 
@@ -141,11 +142,8 @@ default-features = false
 [dependencies.solana-rent]
 version = "4.4.0"
 
-[dependencies.solana-sbpf]
-path = "../../../sbpf"
-features = ["jit"]
-default-features = false
-
+[dependencies]
+solana-sbpf = { git = "https://github.com/mubarizkyc/sbpf", branch = "interpreter", features = ["jit"], default-features = false }
 
 [dependencies.solana-sdk-ids]
 version = "3.1.0"

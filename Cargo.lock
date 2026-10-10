@@ -2853,44 +2853,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-bpf-loader-program"
-version = "4.3.0"
-dependencies = [
- "assert_matches",
- "bincode",
- "criterion",
- "qualifier_attr",
- "rand 0.9.5",
- "shuttle 0.7.1",
- "solana-account",
- "solana-bincode",
- "solana-clock 3.2.1",
- "solana-epoch-rewards",
- "solana-epoch-schedule",
- "solana-fee-calculator",
- "solana-instruction 3.5.1",
- "solana-last-restart-slot",
- "solana-loader-v3-interface",
- "solana-packet",
- "solana-program-runtime",
- "solana-pubkey",
- "solana-rent",
- "solana-sbpf",
- "solana-sdk-ids",
- "solana-slot-hashes",
- "solana-svm-feature-set",
- "solana-svm-log-collector",
- "solana-svm-measure",
- "solana-svm-type-overrides",
- "solana-syscalls",
- "solana-system-interface",
- "solana-system-program",
- "solana-sysvar-id",
- "solana-transaction-context",
- "wincode",
-]
-
-[[package]]
 name = "solana-clock"
 version = "3.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3235,9 +3197,6 @@ version = "7.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "68029ab11d9c891d4ce23ada75745e40f983c5674af366f447b672569634231b"
 dependencies = [
- "serde",
- "serde_bytes",
- "serde_derive",
  "solana-instruction 3.5.1",
  "solana-pubkey",
  "solana-sdk-ids",
@@ -3522,6 +3481,7 @@ checksum = "dcf09694a0fc14e5ffb18f9b7b7c0f15ecb6eac5b5610bf76a1853459d19daf9"
 [[package]]
 name = "solana-sbpf"
 version = "0.25.0"
+source = "git+https://github.com/mubarizkyc/sbpf?branch=interpreter#b86df09f6aa8e7234d285c43ccb3dcf54043d8d4"
 dependencies = [
  "byteorder",
  "combine",
