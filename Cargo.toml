@@ -24,7 +24,7 @@ solana-svm-feature-set = { version = "=4.3.0", features = ["agave-unstable-api"]
 solana-svm-log-collector = { version = "=4.3.0", features = ["agave-unstable-api"] }
 solana-svm-callback = { version = "=4.3.0", features = ["agave-unstable-api"] }
 solana-svm-timings = { version = "=4.3.0", features = ["agave-unstable-api"] }
-solana-sbpf = { path = "../sbpf", default-features = false }
+solana-sbpf = { path = "../sbpf",features = ["tracer"] }
 indexmap = "2"
 clap = { version = "4", features = ["derive"] }
 base64 = "0.22"

@@ -3521,7 +3521,7 @@ checksum = "dcf09694a0fc14e5ffb18f9b7b7c0f15ecb6eac5b5610bf76a1853459d19daf9"
 
 [[package]]
 name = "solana-sbpf"
-version = "0.24.0"
+version = "0.25.0"
 dependencies = [
  "byteorder",
  "combine",

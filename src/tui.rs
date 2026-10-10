@@ -1,13 +1,11 @@
-use crate::{
-    InsnTrace, MemTrace, Output, SyscallTrace, trace_helpers::disassemble_instruction_for_tracing,
-};
+use crate::TraceContext;
+use crate::{InsnTrace, MemTrace, Output, SyscallTrace};
 use anyhow::Result;
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
-use indexmap::IndexMap;
 use ratatui::{
     Frame, Terminal,
     backend::CrosstermBackend,
@@ -16,22 +14,18 @@ use ratatui::{
     text::{Line, Span},
     widgets::{Block, Borders, List, ListItem, ListState, Paragraph, Row, Table, Wrap},
 };
-use serde::Deserialize;
-use std::{collections::HashMap, env, fs, io};
-
+use std::{
+    collections::{HashMap, VecDeque},
+    io,
+};
 // ==========================================
-// 1. DATA STRUCTURES (Matching your JSON)
+//  APP STATE & VIRTUAL MACHINE
 // ==========================================
-// ==========================================
-// 2. APP STATE & VIRTUAL MACHINE
-// ==========================================
-use crate::TraceContext;
-use std::collections::VecDeque;
 #[derive(PartialEq, Clone, Copy)]
 pub enum ActiveView {
     Stack,
-    IxData,   // window into input: [ix_data_offset, +ix_data_len)
-    RawInput, // full serialized region, toggle with 'r'
+    IxData,
+    RawInput,
     Account(usize),
 }
 
@@ -43,17 +37,16 @@ pub struct MemRegion {
 }
 pub struct VirtualMemory {
     pub stack: MemRegion,
-    pub input: MemRegion, // Renamed from 'params'
+    pub input: MemRegion,
     pub accounts: Vec<MemRegion>,
     pub ix_data_offset: usize,
-    pub ix_data_len: usize,       // ADD THIS
-    pub program_id_offset: usize, // ADD THIS
+    pub ix_data_len: usize,
+    pub program_id_offset: usize,
 }
 
 impl VirtualMemory {
     pub fn new(ctx: &TraceContext) -> Self {
         let base = ctx.param_vm_addr; // 17179869184 (0x400000000)
-
         // Helper: Converts Absolute VM Address -> Buffer-Relative Index
         let to_relative = |addr: usize| -> usize {
             if (addr as u64) >= base {
@@ -88,10 +81,9 @@ impl VirtualMemory {
                 data: ctx.param_bytes.clone(),
             },
             accounts,
-            // APPLY THE FIX HERE:
-            ix_data_offset: to_relative(ctx.ix_data_offset), // Becomes 126528
-            ix_data_len: ctx.ix_data_len,                    // Stays 18
-            program_id_offset: to_relative(ctx.program_id_offset), // Becomes 126546
+            ix_data_offset: to_relative(ctx.ix_data_offset),
+            ix_data_len: ctx.ix_data_len,
+            program_id_offset: to_relative(ctx.program_id_offset),
         }
     }
 
@@ -101,39 +93,42 @@ impl VirtualMemory {
         }
         let addr = m.vm_addr;
         let le = m.value.to_le_bytes();
+        let n = m.size.min(8) as usize;
 
         // 1. Stack
         if addr >= self.stack.vm_start && addr < self.stack.vm_start + self.stack.data.len() as u64
         {
             let off = (addr - self.stack.vm_start) as usize;
-            for i in 0..(m.size as usize) {
+            for i in 0..n {
                 if off + i < self.stack.data.len() {
                     self.stack.data[off + i] = le[i];
                 }
             }
             return;
         }
-        // 2. Input (The whole serialized blob)
-        if addr >= self.input.vm_start && addr < self.input.vm_start + self.input.data.len() as u64
-        {
-            let off = (addr - self.input.vm_start) as usize;
-            for i in 0..(m.size as usize) {
-                if off + i < self.input.data.len() {
-                    self.input.data[off + i] = le[i];
-                }
-            }
-            return;
-        }
-        // 3. Accounts
-        for acc in &mut self.accounts {
+
+        // 2. Account windows and input OVERLAP (inline serialization):
+        //    mirror the write into both so Raw Input and Account tabs agree.
+        for acc in self.accounts.iter_mut() {
             if addr >= acc.vm_start && addr < acc.vm_start + acc.data.len() as u64 {
                 let off = (addr - acc.vm_start) as usize;
-                for i in 0..(m.size as usize) {
+                for i in 0..n {
                     if off + i < acc.data.len() {
                         acc.data[off + i] = le[i];
                     }
                 }
-                return;
+                break;
+            }
+        }
+
+        // 3. Input (the whole serialized blob)
+        if addr >= self.input.vm_start && addr < self.input.vm_start + self.input.data.len() as u64
+        {
+            let off = (addr - self.input.vm_start) as usize;
+            for i in 0..n {
+                if off + i < self.input.data.len() {
+                    self.input.data[off + i] = le[i];
+                }
             }
         }
     }
@@ -141,7 +136,7 @@ impl VirtualMemory {
 
 pub struct App {
     pub trace_data: Output,
-    pub trace_ctx: TraceContext, // ADD THIS: Needed to rebuild memory on backward steps
+    pub trace_ctx: TraceContext,
     pub insn_index: usize,
     pub registers: [u64; 11],
     pub mem_trace: Vec<MemTrace>,
@@ -154,6 +149,11 @@ pub struct App {
     pub active_view: ActiveView,
     pub mem_scroll: usize,
     pub mem_viewport_rows: usize,
+    pub flow_rows: Vec<u64>,            // unique PCs, first-seen (flow) order
+    pub pc_to_row: HashMap<u64, usize>, // pc -> display row
+    pub first_idx: Vec<usize>,          // row -> first trace idx (for static desc)
+    pub latest_exec: Vec<Option<usize>>, // row -> latest executed step <= current
+    pub exec_counts: Vec<u32>,          // row -> executions so far
 }
 
 impl App {
@@ -163,8 +163,6 @@ impl App {
         let mems = trace_data.mem_trace.take().unwrap_or_default();
         let syss = trace_data.syscall_trace.take().unwrap_or_default();
 
-        // ... (Keep your existing Queue building logic here) ...
-        // Build Queues for 1-to-1 chronological pairing
         let mut mem_q: HashMap<u64, VecDeque<usize>> = HashMap::new();
         for (i, m) in mems.iter().enumerate() {
             mem_q.entry(m.pc).or_default().push_back(i);
@@ -195,7 +193,18 @@ impl App {
             }
             step_sys_indices.push(s_indices);
         }
-
+        let mut flow_rows: Vec<u64> = Vec::new();
+        let mut pc_to_row: HashMap<u64, usize> = HashMap::new();
+        let mut first_idx: Vec<usize> = Vec::new();
+        for (i, insn) in insns.iter().enumerate() {
+            if !pc_to_row.contains_key(&insn.pc) {
+                pc_to_row.insert(insn.pc, flow_rows.len());
+                flow_rows.push(insn.pc);
+                first_idx.push(i);
+            }
+        }
+        let latest_exec = vec![None; flow_rows.len()];
+        let exec_counts = vec![0u32; flow_rows.len()];
         trace_data.insn_trace = Some(insns);
 
         let mut list_state = ListState::default();
@@ -225,9 +234,69 @@ impl App {
             active_view: ActiveView::Stack, // Default to Stack
             mem_scroll: 0,
             mem_viewport_rows: 0,
+            exec_counts,
+            first_idx,
+            flow_rows,
+            latest_exec,
+            pc_to_row,
         };
         app.update_registers_forward();
+        app.rebuild_flow();
         app
+    }
+    /// O(n) rescan — backward steps and seeks only
+    pub fn rebuild_flow(&mut self) {
+        for r in self.latest_exec.iter_mut() {
+            *r = None;
+        }
+        for c in self.exec_counts.iter_mut() {
+            *c = 0;
+        }
+        if let Some(insns) = &self.trace_data.insn_trace {
+            for s in 0..=self.insn_index.min(insns.len().saturating_sub(1)) {
+                if let Some(&r) = self.pc_to_row.get(&insns[s].pc) {
+                    self.latest_exec[r] = Some(s);
+                    self.exec_counts[r] += 1;
+                }
+            }
+        }
+    }
+
+    /// O(1) — after a single forward step
+    fn flow_step_forward(&mut self) {
+        if let Some(insn) = self.current_insn() {
+            if let Some(&r) = self.pc_to_row.get(&insn.pc) {
+                self.latest_exec[r] = Some(self.insn_index);
+                self.exec_counts[r] += 1;
+            }
+        }
+    }
+
+    /// Central jump helper
+    pub fn seek(&mut self, idx: usize) {
+        let len = self
+            .trace_data
+            .insn_trace
+            .as_ref()
+            .map(|v| v.len())
+            .unwrap_or(0);
+        if idx < len {
+            self.insn_index = idx;
+            self.recalculate_registers();
+            self.vmem = VirtualMemory::new(&self.trace_ctx);
+            for i in 0..=self.insn_index {
+                if let Some(indices) = self.step_mem_indices.get(i) {
+                    for &mi in indices {
+                        self.vmem.apply(&self.mem_trace[mi]);
+                    }
+                }
+            }
+            self.rebuild_flow();
+            if let Some(pc) = self.current_insn().map(|i| i.pc) {
+                self.list_state
+                    .select(Some(self.pc_to_row.get(&pc).copied().unwrap_or(0)));
+            }
+        }
     }
     fn view_spec(&self) -> (usize, usize, usize, String, bool) {
         match self.active_view {
@@ -283,40 +352,38 @@ impl App {
             }
         }
     }
-    // Call this when pressing 'n' (Next)
     pub fn next(&mut self) {
-        if let Some(insns) = &self.trace_data.insn_trace {
-            if self.insn_index < insns.len().saturating_sub(1) {
-                self.insn_index += 1;
-                self.update_registers_forward();
+        // Extract length first — ends the immutable borrow immediately
+        let len = self
+            .trace_data
+            .insn_trace
+            .as_ref()
+            .map(|v| v.len())
+            .unwrap_or(0);
 
-                // Apply ONLY the new memory events for this step
-                if let Some(indices) = self.step_mem_indices.get(self.insn_index) {
-                    for &idx in indices {
-                        self.vmem.apply(&self.mem_trace[idx]);
-                    }
+        if self.insn_index < len.saturating_sub(1) {
+            self.insn_index += 1;
+            self.update_registers_forward();
+
+            if let Some(indices) = self.step_mem_indices.get(self.insn_index) {
+                for &idx in indices {
+                    self.vmem.apply(&self.mem_trace[idx]);
                 }
-                self.list_state.select(Some(self.insn_index));
             }
+
+            self.flow_step_forward();
+
+            // Re-borrow immutably for just the PC lookup
+            let pc = self.trace_data.insn_trace.as_ref().unwrap()[self.insn_index].pc;
+            self.list_state
+                .select(Some(self.pc_to_row.get(&pc).copied().unwrap_or(0)));
         }
     }
 
-    // Call this when pressing 'p' (Previous)
     pub fn previous(&mut self) {
         if self.insn_index > 0 {
-            self.insn_index -= 1;
-            self.recalculate_registers();
-
-            // Rebuild memory from scratch (Safest way to time-travel backward)
-            self.vmem = VirtualMemory::new(&self.trace_ctx);
-            for i in 0..=self.insn_index {
-                if let Some(indices) = self.step_mem_indices.get(i) {
-                    for &idx in indices {
-                        self.vmem.apply(&self.mem_trace[idx]);
-                    }
-                }
-            }
-            self.list_state.select(Some(self.insn_index));
+            let target = self.insn_index - 1;
+            self.seek(target);
         }
     }
     fn current_insn(&self) -> Option<&InsnTrace> {
@@ -335,7 +402,7 @@ impl App {
     }
 }
 // ==========================================
-// 3. MAIN & TERMINAL SETUP
+//  MAIN & TERMINAL SETUP
 // ==========================================
 /// Launches the interactive Ratatui TUI debugger directly from the Output struct.
 /// No JSON serialization/deserialization needed — data flows straight from the VM.
@@ -378,7 +445,6 @@ pub fn launch_tui(output: Output) -> Result<()> {
 
     Ok(())
 }
-
 fn run_app<B: ratatui::backend::Backend>(
     terminal: &mut Terminal<B>,
     app: &mut App,
@@ -444,20 +510,17 @@ fn run_app<B: ratatui::backend::Backend>(
                     }
                     KeyCode::Char('n') | KeyCode::Down => app.next(),
                     KeyCode::Char('p') | KeyCode::Up => app.previous(),
-                    KeyCode::Char('g') => {
-                        app.insn_index = 0;
-                        app.list_state.select(Some(0));
-                        app.recalculate_registers();
-                    }
+                    KeyCode::Char('g') => app.seek(0),
                     KeyCode::Char('G') => {
-                        if let Some(insns) = &app.trace_data.insn_trace {
-                            if !insns.is_empty() {
-                                app.insn_index = insns.len() - 1;
-                                app.list_state.select(Some(app.insn_index));
-                                app.recalculate_registers();
-                            }
-                        }
+                        let last = app
+                            .trace_data
+                            .insn_trace
+                            .as_ref()
+                            .map(|v| v.len().saturating_sub(1))
+                            .unwrap_or(0);
+                        app.seek(last);
                     }
+
                     _ => {}
                 }
             }
@@ -478,7 +541,146 @@ fn signed_off_str(value: i16) -> String {
         format!("+{value:#x}")
     }
 }
+/// Dynamic annotation column: the live values for ONE executed instruction.
+/// Shared by the trace view and the flow view.
+fn annotate_spans(insn: &InsnTrace) -> Vec<Span> {
+    let dim = Style::default().fg(Color::DarkGray);
+    // Fix 1: effective address = base register + signed offset
+    let eff = |base: u64| base.wrapping_add(insn.off as i64 as u64);
 
+    let mut spans: Vec<Span> = Vec::new();
+    match insn.category {
+        // if your field is String, use insn.category.as_str()
+        "alu" => {
+            // only signal when the value actually changed
+            if insn.dst_val_before != insn.dst_val_after {
+                spans.push(Span::styled(format!("{:#018x}", insn.dst_val_before), dim));
+                spans.push(Span::styled(" → ", dim));
+                spans.push(Span::styled(
+                    format!("{:#018x}", insn.dst_val_after),
+                    Style::default()
+                        .fg(Color::Green)
+                        .add_modifier(Modifier::BOLD),
+                ));
+            }
+            // reg-reg ops: show the source operand's value
+            // (is_imm == true covers IMM variants AND unary ops: neg/le/be)
+            if !insn.is_imm && insn.src != insn.dst {
+                spans.push(Span::styled(
+                    format!("   r{}={:#x}", insn.src, insn.src_val),
+                    dim,
+                ));
+            }
+        }
+
+        "load" => {
+            if insn.opcode_name == "lddw" {
+                // lddw is an IMMEDIATE load — it touches NO memory.
+                // Showing [addr] here would be a lie; show the reg mutation only.
+                if insn.dst_val_before != insn.dst_val_after {
+                    spans.push(Span::styled(format!("{:#018x}", insn.dst_val_before), dim));
+                    spans.push(Span::styled(" → ", dim));
+                    spans.push(Span::styled(
+                        format!("{:#018x}", insn.dst_val_after),
+                        Style::default()
+                            .fg(Color::Green)
+                            .add_modifier(Modifier::BOLD),
+                    ));
+                }
+            } else {
+                // real memory read: [effective address] → loaded value
+                spans.push(Span::styled(format!("[{:#x}]", eff(insn.src_val)), dim));
+                spans.push(Span::styled(" → ", dim));
+                spans.push(Span::styled(
+                    format!("{:#018x}", insn.dst_val_after),
+                    Style::default()
+                        .fg(Color::Cyan)
+                        .add_modifier(Modifier::BOLD),
+                ));
+            }
+        }
+
+        "store" => {
+            // imm stores write insn.imm; reg stores write insn.src_val
+            let written = if insn.is_imm {
+                format!("{:#x}", insn.imm)
+            } else {
+                format!("{:#018x}", insn.src_val)
+            };
+            spans.push(Span::styled(
+                written,
+                Style::default()
+                    .fg(Color::Yellow)
+                    .add_modifier(Modifier::BOLD),
+            ));
+            spans.push(Span::styled(" → ", dim));
+            // real memory write: value → [effective address]
+            spans.push(Span::styled(
+                format!("[{:#x}]", eff(insn.dst_val_before)),
+                dim,
+            ));
+        }
+
+        "jump" => {
+            // Fix 2: verdict ONLY for conditional jumps
+            if insn.opcode_name != "ja" {
+                match insn.branch_taken {
+                    Some(true) => spans.push(Span::styled(
+                        "✔ ",
+                        Style::default()
+                            .fg(Color::Green)
+                            .add_modifier(Modifier::BOLD),
+                    )),
+                    Some(false) => spans.push(Span::styled(
+                        "✘ ",
+                        Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                    )),
+                    None => {}
+                }
+                // the operands that drove the decision
+                spans.push(Span::styled(
+                    format!("r{}={:#x}", insn.dst, insn.dst_val_before),
+                    dim,
+                ));
+                if !insn.is_imm {
+                    spans.push(Span::styled(
+                        format!("  r{}={:#x}", insn.src, insn.src_val),
+                        dim,
+                    ));
+                }
+            } else if let Some(t) = insn.branch_target {
+                // unconditional: no verdict, just where it goes
+                spans.push(Span::styled(
+                    format!("→ {:#x}", t),
+                    Style::default()
+                        .fg(Color::LightBlue)
+                        .add_modifier(Modifier::BOLD),
+                ));
+            }
+        }
+
+        "call" => {
+            if insn.opcode_name == "exit" {
+                // exit lives in the call category — show the return value
+                spans.push(Span::styled(
+                    format!("r0={:#018x}", insn.dst_val_before),
+                    Style::default()
+                        .fg(Color::Yellow)
+                        .add_modifier(Modifier::BOLD),
+                ));
+            } else {
+                spans.push(Span::styled(
+                    format!("fn@{:#x}", insn.function_pc),
+                    Style::default().fg(Color::Magenta),
+                ));
+                spans.push(Span::styled(format!("  depth={}", insn.call_depth), dim));
+            }
+        }
+
+        _ => {}
+    }
+    spans
+}
 fn ui(f: &mut Frame, app: &mut App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
@@ -554,6 +756,7 @@ fn ui(f: &mut Frame, app: &mut App) {
         .split(chunks[1]);
 
     // 1. Disassembly
+    /*
     let empty_insns: Vec<InsnTrace> = vec![];
     let insns = app
         .trace_data
@@ -561,210 +764,59 @@ fn ui(f: &mut Frame, app: &mut App) {
         .as_ref()
         .map_or(&empty_insns, |v| v);
     let empty_descs: Vec<String> = vec![];
-    let descs = app
-        .trace_data
-        .insn_desc
-        .as_ref()
-        .map_or(&empty_descs, |v| v);
+    */
 
     // ── Build deduplicated view ──────────────────────────────────────────────
-    // unique_pcs: ordered list of PCs in first-seen order (preserves code layout)
+    // unique_pcs: ordered by first execution — shows control flow as it was
+    // actually taken, not static address order. Loops collapse to one row,
+    // untaken branches stay dimmed.
     // pc_to_row:  PC → index in the display list
     // row_to_trace_idx: display row → current trace index for that PC
     //             (updated each step so annotations always show current values)
 
-    // 1. Collect unique PCs in first-seen order
-    let mut seen_pcs: IndexMap<u64, usize> = IndexMap::new(); // pc → display row
-    for (trace_idx, insn) in insns.iter().enumerate() {
-        seen_pcs.entry(insn.pc).or_insert(trace_idx);
-    }
+    let descs = app
+        .trace_data
+        .insn_desc
+        .as_ref()
+        .cloned()
+        .unwrap_or_default();
+    let insns_rc = app.trace_data.insn_trace.as_ref(); // or restructure borrows; clone is fine once/frame
 
-    // 2. Current step's PC — used to find which display row to highlight
-    let current_pc = insns.get(app.insn_index).map(|i| i.pc).unwrap_or(0);
-
-    // 3. Build a vec of (display_insn, display_desc) using the LATEST trace
-    //    entry for each PC, so annotations show current iteration's values.
-    //    Walk the trace up to insn_index to find the last occurrence of each PC.
-    let mut pc_latest: HashMap<u64, (usize, usize)> = HashMap::new(); // pc → (trace_idx, desc_idx)
-    for idx in 0..=app.insn_index.min(insns.len().saturating_sub(1)) {
-        let pc = insns[idx].pc;
-        pc_latest.insert(pc, (idx, idx));
-    }
-
-    // 4. Build items in first-seen order, using latest values
-    let unique_entries: Vec<(&InsnTrace, &String)> = seen_pcs
-        .iter()
-        .map(|(pc, _first_idx)| {
-            // use the latest trace entry for this PC (up to current step)
-            let latest_idx = pc_latest.get(pc).map(|(i, _)| *i).unwrap_or(*_first_idx); // fall back to first if not yet executed
-            // but if not yet reached, use first occurrence for static desc
-            let desc_idx = pc_latest.get(pc).map(|(_, d)| *d).unwrap_or(*_first_idx);
-            (&insns[latest_idx], &descs[desc_idx])
-        })
-        .collect();
-
-    // 5. Find which display row the current step maps to
-    let current_display_row = seen_pcs.get_index_of(&current_pc).unwrap_or(0);
-
-    // sync the list state to follow current execution
-    app.list_state.select(Some(current_display_row));
-
-    // 6. Render — same span logic as before, but on unique_entries
-    let items: Vec<ListItem> = unique_entries
+    let items: Vec<ListItem> = app
+        .flow_rows
         .iter()
         .enumerate()
-        .map(|(display_idx, (insn, desc))| {
-            // dim instructions not yet reached
-            let not_yet_reached = !pc_latest.contains_key(&insn.pc);
-            // mark the currently-executing instruction
-            let is_current = insn.pc == current_pc;
-            // detect instructions that are part of a loop
-            // (executed more than once in the trace so far)
-            let exec_count = insns[..=app.insn_index.min(insns.len().saturating_sub(1))]
-                .iter()
-                .filter(|i| i.pc == insn.pc)
-                .count();
-            let is_loop = exec_count > 1;
-
+        .map(|(row, &pc)| {
+            let desc = descs
+                .get(app.first_idx[row])
+                .map(|s| s.as_str())
+                .unwrap_or("");
+            let reached = app.latest_exec[row].is_some();
             let mut spans = vec![
-                // iteration count badge — shows how many times this PC was hit
-                if is_loop {
+                if app.exec_counts[row] > 1 {
                     Span::styled(
-                        format!("×{:<3} ", exec_count),
+                        format!("×{:<3} ", app.exec_counts[row]),
                         Style::default().fg(Color::Magenta),
                     )
                 } else {
                     Span::styled("     ", Style::default())
                 },
-                Span::styled(
-                    format!("{:05} ", insn.pc),
-                    if not_yet_reached {
-                        Style::default().fg(Color::DarkGray)
-                    } else {
-                        Style::default().fg(Color::DarkGray)
-                    },
-                ),
+                Span::styled(format!("{:05} ", pc), Style::default().fg(Color::DarkGray)),
                 Span::styled(
                     format!("{:<40}", desc),
-                    if not_yet_reached {
-                        Style::default().fg(Color::DarkGray) // dimmed — not yet executed
-                    } else {
+                    if reached {
                         Style::default().fg(Color::White)
+                    } else {
+                        Style::default().fg(Color::DarkGray)
                     },
                 ),
                 Span::styled("│ ", Style::default().fg(Color::DarkGray)),
             ];
-
-            // only show dynamic annotations for reached instructions
-            if !not_yet_reached {
-                match insn.category {
-                    "alu" => {
-                        if insn.dst_val_before != insn.dst_val_after {
-                            spans.push(Span::styled(
-                                format!("{:#018x}", insn.dst_val_before),
-                                Style::default().fg(Color::DarkGray),
-                            ));
-                            spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
-                            spans.push(Span::styled(
-                                format!("{:#018x}", insn.dst_val_after),
-                                Style::default()
-                                    .fg(Color::Green)
-                                    .add_modifier(Modifier::BOLD),
-                            ));
-                        }
-                        if !insn.is_imm && insn.src != insn.dst {
-                            spans.push(Span::styled(
-                                format!("   r{}={:#x}", insn.src, insn.src_val),
-                                Style::default().fg(Color::DarkGray),
-                            ));
-                        }
-                    }
-                    "load" => {
-                        // Compute effective address: src_val + off
-                        let eff_addr = insn.src_val.wrapping_add(insn.off as i64 as u64);
-
-                        spans.push(Span::styled(
-                            format!("[{:#x}]", eff_addr), // Now shows the REAL address
-                            Style::default().fg(Color::DarkGray),
-                        ));
-                        spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
-                        spans.push(Span::styled(
-                            format!("{:#018x}", insn.dst_val_after),
-                            Style::default()
-                                .fg(Color::Cyan)
-                                .add_modifier(Modifier::BOLD),
-                        ));
-                    }
-
-                    "store" => {
-                        let written = if insn.is_imm {
-                            format!("{:#x}", insn.imm)
-                        } else {
-                            format!("{:#018x}", insn.src_val)
-                        };
-                        spans.push(Span::styled(
-                            written,
-                            Style::default()
-                                .fg(Color::Yellow)
-                                .add_modifier(Modifier::BOLD),
-                        ));
-                        spans.push(Span::styled(" → ", Style::default().fg(Color::DarkGray)));
-
-                        // Compute effective address: dst_val_before + off
-                        let eff_addr = insn.dst_val_before.wrapping_add(insn.off as i64 as u64);
-                        spans.push(Span::styled(
-                            format!("[{:#x}]", eff_addr), // Now shows the REAL address
-                            Style::default().fg(Color::DarkGray),
-                        ));
-                    }
-                    "jump" => {
-                        match insn.branch_taken {
-                            Some(true) => spans.push(Span::styled(
-                                "✔ ",
-                                Style::default()
-                                    .fg(Color::Green)
-                                    .add_modifier(Modifier::BOLD),
-                            )),
-                            Some(false) => spans.push(Span::styled(
-                                "✘ ",
-                                Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
-                            )),
-                            None => {}
-                        }
-                        spans.push(Span::styled(
-                            format!("r{}={:#x}", insn.dst, insn.dst_val_before),
-                            Style::default().fg(Color::DarkGray),
-                        ));
-                        if !insn.is_imm {
-                            spans.push(Span::styled(
-                                format!("  r{}={:#x}", insn.src, insn.src_val),
-                                Style::default().fg(Color::DarkGray),
-                            ));
-                        }
-                    }
-                    "call" => {
-                        if insn.opcode_name == "exit" {
-                            spans.push(Span::styled(
-                                format!("r0={:#018x}", insn.dst_val_before),
-                                Style::default()
-                                    .fg(Color::Yellow)
-                                    .add_modifier(Modifier::BOLD),
-                            ));
-                        } else {
-                            spans.push(Span::styled(
-                                format!("fn@{:#x}", insn.function_pc),
-                                Style::default().fg(Color::Magenta),
-                            ));
-                            spans.push(Span::styled(
-                                format!("  depth={}", insn.call_depth),
-                                Style::default().fg(Color::DarkGray),
-                            ));
-                        }
-                    }
-                    _ => {}
+            if let Some(s) = app.latest_exec[row] {
+                if let Some(insn) = insns_rc.as_ref().and_then(|v| v.get(s)) {
+                    spans.extend(annotate_spans(insn)); // your existing category match, extracted once
                 }
             }
-
             ListItem::new(Line::from(spans))
         })
         .collect();

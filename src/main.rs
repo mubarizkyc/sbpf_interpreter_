@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use anyhow::{Context, Result, anyhow};
 pub mod tui;
 use base64::{Engine, engine::general_purpose::STANDARD as BASE64};
@@ -371,17 +372,17 @@ fn build_memory_mapping<'a>(
             feature_set.direct_account_pointers_in_program_input,
         )
         .map_err(|e| anyhow!("serialize_parameters failed: {:?}", e))?;
-    println!("parameter_bytes len: {:?}", parameter_bytes.len());
-    println!("ix_data_offset: {:?}", instruction_data_offset);
-    println!(
+    eprintln!("parameter_bytes len: {:?}", parameter_bytes.len());
+    eprintln!("ix_data_offset: {:?}", instruction_data_offset);
+    eprintln!(
         "program_id_offset: {:?}",
         instruction_data_offset + instruction_context.get_instruction_data().len()
     );
-    println!(
+    eprintln!(
         "ix_data_len: {:?}",
         instruction_context.get_instruction_data().len()
     );
-    println!(
+    eprintln!(
         "ix_data: {:?}",
         hex::encode(instruction_context.get_instruction_data())
     );
