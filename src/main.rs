@@ -1,4 +1,4 @@
-#![allow(warnings)]
+//#![allow(warnings)]
 use anyhow::{Context, Result, anyhow};
 pub mod tui;
 use base64::{Engine, engine::general_purpose::STANDARD as BASE64};

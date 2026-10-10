@@ -353,7 +353,7 @@ impl App {
         }
     }
     pub fn next(&mut self) {
-        // Extract length first — ends the immutable borrow immediately
+        // Extract length first  ends the immutable borrow immediately
         let len = self
             .trace_data
             .insn_trace
@@ -881,7 +881,39 @@ fn ui(f: &mut Frame, app: &mut App) {
         .split(chunks[2]);
     // --- BOTTOM LEFT: STACK & INPUT INSPECTOR ---
     let mem_area = bottom_chunks[0];
-
+    //Render syscalls
+    let sys_area = bottom_chunks[1];
+    let mut sys_lines = vec![];
+    if let Some(indices) = app.step_sys_indices.get(app.insn_index) {
+        for &idx in indices {
+            let s = &app.sys_trace[idx];
+            sys_lines.push(Line::from(vec![
+                Span::styled(
+                    "[SYSCALL] ",
+                    Style::default()
+                        .fg(Color::Yellow)
+                        .add_modifier(Modifier::BOLD),
+                ),
+                Span::raw(format!("{} (depth {})", s.name, s.call_depth)),
+            ]));
+            sys_lines.push(Line::from(Span::raw(format!("  args: {:?}", s.args))));
+            sys_lines.push(Line::from(Span::raw(format!("  result: {}", s.result))));
+        }
+    }
+    if sys_lines.is_empty() {
+        sys_lines.push(Line::from(Span::styled(
+            "No syscalls this step.",
+            Style::default().fg(Color::DarkGray),
+        )));
+    }
+    let sys_widget = Paragraph::new(sys_lines)
+        .block(
+            Block::default()
+                .borders(Borders::ALL)
+                .title("Syscall Side-Effects"),
+        )
+        .wrap(Wrap { trim: true });
+    f.render_widget(sys_widget, sys_area);
     // Subtract 6 for: Top border, Bottom border, Tabs line, Empty line, Status line, Empty line
     let visible_rows = mem_area.height.saturating_sub(6) as usize;
     app.mem_viewport_rows = visible_rows;
