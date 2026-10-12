@@ -41,7 +41,13 @@ class TestBasicExecution:
         assert r.syscall_trace == []
         assert r.mem_trace == []
         assert r.insn_trace == []
+    def test_failure_case_invalid_program(self, dbg: SbpfDebugger):
+       """This test PASSES (green) by proving the system handles failure correctly."""
+       r = dbg.execute(program="/nonexistent/fake.so", accounts=ACCOUNTS)
 
+            # These assertions MUST be true for the test to pass
+       assert r.success is False          # ✅ Proves it didn't crash silently
+       assert r.error is not None         # ✅ Proves it returned an error message
 
 class TestTraceInsn:
     def test_all_categories(self, dbg: SbpfDebugger):

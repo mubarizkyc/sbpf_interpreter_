@@ -1036,7 +1036,7 @@ fn collect_output(cli: &Cli, exec_results: ExecutionResults) -> Result<Output> {
 
 fn run() -> Result<Output> {
     let cli = Cli::parse();
-
+    //hello
     // Step 1: Input Preparation
     let (
         elf_bytes,
