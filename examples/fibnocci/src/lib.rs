@@ -1,0 +1,22 @@
+#[cfg(test)]
+mod tests {
+    use mollusk_svm::{result::Check, Mollusk};
+    use solana_address::Address;
+    use solana_instruction::Instruction;
+
+    #[test]
+    fn test_hello_world() {
+        let program_id_keypair_bytes = std::fs::read("deploy/fibnocci-keypair.json").unwrap()[..32]
+            .try_into()
+            .expect("slice with incorrect length");
+        let program_id = Address::new_from_array(program_id_keypair_bytes);
+
+        let instruction = Instruction::new_with_bytes(program_id, &vec![32 as u8], vec![]);
+
+        let mollusk = Mollusk::new(&program_id, "deploy/fibnocci");
+
+        let result =
+            mollusk.process_and_validate_instruction(&instruction, &[], &[Check::success()]);
+        assert!(!result.program_result.is_err());
+    }
+}
