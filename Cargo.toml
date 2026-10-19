@@ -1,14 +1,14 @@
 
 [workspace]
-members = [ "crates/solana-bpf-loader-program","crates/solana-program-runtime","crates/solana-transaction-context","crates/solana-syscalls","crates/solana-system-program"]
+members = [ "crates/solana-program-runtime","crates/solana-transaction-context","crates/solana-syscalls","crates/solana-system-program"]
 [package]
 name = "sbpf_interpreter_"
 version = "0.1.0"
 edition = "2024"
-
+[patch.crates-io]
+solana-sbpf = { git = "https://github.com/mubarizkyc/sbpf", branch = "interpreter", features = ["jit"] }
 [dependencies]
 solana-syscalls = { path = "crates/solana-syscalls", features = ["agave-unstable-api"], default-features = false }
-#solana-bpf-loader-program = { path = "crates/solana-bpf-loader-program", features = ["agave-unstable-api"], default-features = false }
 solana-program-runtime = { path = "crates/solana-program-runtime", features = ["agave-unstable-api", "dev-context-only-utils","metrics"] }
 solana-transaction-context = { path = "crates/solana-transaction-context", features = ["agave-unstable-api", "bincode", "dev-context-only-utils"] }
 solana-account = { version = "=4.7.0", features = ["bincode"] }
@@ -24,7 +24,7 @@ solana-svm-feature-set = { version = "=4.3.0", features = ["agave-unstable-api"]
 solana-svm-log-collector = { version = "=4.3.0", features = ["agave-unstable-api"] }
 solana-svm-callback = { version = "=4.3.0", features = ["agave-unstable-api"] }
 solana-svm-timings = { version = "=4.3.0", features = ["agave-unstable-api"] }
-solana-sbpf = { path = "../sbpf", default-features = false }
+solana-sbpf = { git = "https://github.com/mubarizkyc/sbpf", branch = "interpreter", features = ["tracer"] }
 indexmap = "2"
 clap = { version = "4", features = ["derive"] }
 base64 = "0.22"

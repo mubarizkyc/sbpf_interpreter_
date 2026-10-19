@@ -70,9 +70,8 @@ version = "4.0.0"
 [dependencies.solana-pubkey]
 version = "4.3.0"
 default-features = false
-[dependencies.solana-sbpf]
-path = "../../../sbpf"
-default-features = false
+[dependencies]
+solana-sbpf = { git = "https://github.com/mubarizkyc/sbpf", branch = "interpreter", features = ["jit"] }
 
 [dependencies.wincode]
 version = "0.6.1"
